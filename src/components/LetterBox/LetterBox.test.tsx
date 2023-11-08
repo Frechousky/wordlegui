@@ -2,12 +2,14 @@ import { render, screen } from '@testing-library/react'
 import LetterBox, { LetterBoxStatus } from './LetterBox'
 import styles from './LetterBox.module.css'
 
-test.each('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
-  'renders %s letter in uppercase',
+test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
+  "renders input letter '%s' in uppercase",
   (letter: string) => {
     render(<LetterBox letter={letter} status={LetterBoxStatus.UNKNOWN} />)
-    const lb = screen.getByText(new RegExp(letter, 'i'))
-    expect(lb).toBeInTheDocument()
+
+    const lb = screen.getByTestId('letter-box')
+
+    expect(lb).toHaveTextContent(letter.toUpperCase())
   }
 )
 
@@ -22,9 +24,10 @@ test.each([
 ])(
   "has css classes '%s' when status is %s",
   (expectedClass: string, status: LetterBoxStatus) => {
-    const letter = 'a'
-    render(<LetterBox letter={letter} status={status} />)
-    const lb = screen.getByText(new RegExp(letter, 'i'))
+    render(<LetterBox letter='a' status={status} />)
+
+    const lb = screen.getByTestId('letter-box')
+
     expect(lb).toHaveClass(expectedClass)
   }
 )

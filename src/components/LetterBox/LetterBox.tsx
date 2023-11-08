@@ -29,7 +29,10 @@ function LetterBox (props: LetterBoxProps) {
       break
   }
   return (
-    <span className={`${styles.letterBox} ${className}`}>
+    <span
+      className={`${styles.letterBox} ${className}`}
+      data-testid='letter-box'
+    >
       {props.letter.toUpperCase()}
     </span>
   )
