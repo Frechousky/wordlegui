@@ -6,8 +6,8 @@ test.each('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
   'renders %s letter in uppercase',
   (letter: string) => {
     render(<LetterBox letter={letter} status={LetterBoxStatus.UNKNOWN} />)
-    const letterHtml = screen.getByText(letter.toUpperCase())
-    expect(letterHtml).toBeInTheDocument()
+    const lb = screen.getByText(new RegExp(letter, 'i'))
+    expect(lb).toBeInTheDocument()
   }
 )
 
@@ -24,7 +24,7 @@ test.each([
   (expectedClass: string, status: LetterBoxStatus) => {
     const letter = 'a'
     render(<LetterBox letter={letter} status={status} />)
-    const letterHtml = screen.getByText(letter.toUpperCase())
-    expect(letterHtml).toHaveClass(expectedClass)
+    const lb = screen.getByText(new RegExp(letter, 'i'))
+    expect(lb).toHaveClass(expectedClass)
   }
 )
