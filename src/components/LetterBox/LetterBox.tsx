@@ -1,5 +1,3 @@
-import styles from './LetterBox.module.css'
-
 export enum LetterBoxStatus {
   GOOD_POSITION,
   BAD_POSITION,
@@ -13,26 +11,23 @@ export type LetterBoxProps = {
 }
 
 function LetterBox (props: LetterBoxProps) {
-  let className = ''
+  let className = 'letter-box '
   switch (props.status) {
     case LetterBoxStatus.GOOD_POSITION:
-      className = styles.goodPosition
+      className += 'good-position'
       break
     case LetterBoxStatus.BAD_POSITION:
-      className = styles.badPosition
+      className += 'bad-position'
       break
     case LetterBoxStatus.NOT_PRESENT:
-      className = styles.notPresent
+      className += 'not-present'
       break
     case LetterBoxStatus.UNKNOWN:
-      className = styles.unknown
+      className += 'unknown'
       break
   }
   return (
-    <span
-      className={`${styles.letterBox} ${className}`}
-      data-testid='letter-box'
-    >
+    <span className={className} data-testid='letter-box'>
       {props.letter.toUpperCase()}
     </span>
   )

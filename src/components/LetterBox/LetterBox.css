@@ -1,21 +1,21 @@
-.letterBox {
+.letter-box {
     width: 30px;
     padding: 10;
     margin: 10;
     line-height: '50px';
 }
 
-.goodPosition {
+.good-position {
     color: rgb(255, 255, 255);
     background-color: rgb(0, 255, 0);
 }
 
-.badPosition {
+.bad-position {
     color: rgb(255, 255, 255);
     background-color: rgb(0, 0, 255);
 }
 
-.notPresent {
+.not-present {
     color: rgb(255, 255, 255);
     background-color: rgb(0, 0, 0);
 }

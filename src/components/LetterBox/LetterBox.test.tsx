@@ -14,13 +14,10 @@ test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
 )
 
 test.each([
-  [
-    `${styles.letterBox}  ${styles.goodPosition}`,
-    LetterBoxStatus.GOOD_POSITION
-  ],
-  [`${styles.letterBox}  ${styles.badPosition}`, LetterBoxStatus.BAD_POSITION],
-  [`${styles.letterBox}  ${styles.notPresent}`, LetterBoxStatus.NOT_PRESENT],
-  [`${styles.letterBox}  ${styles.unknown}`, LetterBoxStatus.UNKNOWN]
+  ['letter-box good-position', LetterBoxStatus.GOOD_POSITION],
+  ['letter-box bad-position', LetterBoxStatus.BAD_POSITION],
+  ['letter-box not-present', LetterBoxStatus.NOT_PRESENT],
+  ['letter-box unknown', LetterBoxStatus.UNKNOWN]
 ])(
   "has css classes '%s' when status is %s",
   (expectedClass: string, status: LetterBoxStatus) => {
