@@ -1,28 +1,23 @@
-export enum LetterBoxStatus {
-  GOOD_POSITION,
-  BAD_POSITION,
-  NOT_PRESENT,
-  UNKNOWN
-}
+import { LetterStatus } from '../../model'
 
-export type LetterBoxProps = {
+type LetterBoxProps = {
   letter: string
-  status: LetterBoxStatus
+  status: LetterStatus
 }
 
 function LetterBox (props: LetterBoxProps) {
   let className = 'letter-box '
   switch (props.status) {
-    case LetterBoxStatus.GOOD_POSITION:
+    case LetterStatus.GOOD_POSITION:
       className += 'good-position'
       break
-    case LetterBoxStatus.BAD_POSITION:
+    case LetterStatus.BAD_POSITION:
       className += 'bad-position'
       break
-    case LetterBoxStatus.NOT_PRESENT:
+    case LetterStatus.NOT_PRESENT:
       className += 'not-present'
       break
-    case LetterBoxStatus.UNKNOWN:
+    case LetterStatus.UNKNOWN:
       className += 'unknown'
       break
   }
