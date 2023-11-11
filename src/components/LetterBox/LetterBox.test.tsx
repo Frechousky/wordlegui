@@ -9,7 +9,7 @@ test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
 
     const lb = screen.getByTestId('letter-box')
 
-    expect(lb).toHaveTextContent(letter.toUpperCase())
+    expect(lb).toHaveTextContent(new RegExp(`^${letter.toUpperCase()}$`))
   }
 )
 
