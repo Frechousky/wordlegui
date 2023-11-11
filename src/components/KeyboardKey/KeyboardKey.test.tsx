@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react'
+import { BACKSPACE_KEY, LetterStatus, RETURN_KEY } from '../../model'
 import KeyboardKey from './KeyboardKey'
-import { LetterStatus, BACKSPACE_KEY, RETURN_KEY } from '../../model'
 
 test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
   "renders '%s' key correctly",
   (key: string) => {
     render(<KeyboardKey value={key} status={LetterStatus.GOOD_POSITION} />)
 
-    const kk = screen.getByTestId('keyboard-key')
+    const kk = screen.getByRole('button')
 
     expect(kk).toHaveTextContent(new RegExp(`^${key.toUpperCase()}$`))
   }
