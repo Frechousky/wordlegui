@@ -1,5 +1,7 @@
 import { LetterStatus } from '../../model'
 
+import './LetterBox.css'
+
 type LetterBoxProps = {
   letter: string
   status: LetterStatus

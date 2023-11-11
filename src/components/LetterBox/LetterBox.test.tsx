@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import LetterBox from './LetterBox'
 import { LetterStatus } from '../../model'
-import styles from './LetterBox.module.css'
 
 test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
   "renders input letter '%s' in uppercase",
