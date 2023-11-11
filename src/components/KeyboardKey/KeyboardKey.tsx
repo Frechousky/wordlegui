@@ -30,7 +30,7 @@ function KeyboardKey ({ value, status, handleOnClick }: KeyboardKeyProps) {
   return (
     <button
       className={className}
-      data-testid='keyboard-key'
+      data-testid={`keyboard-key-${value}`}
       onClick={handleOnClick}
     >
       {value === BACKSPACE_KEY ? (
