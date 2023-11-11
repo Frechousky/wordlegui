@@ -7,9 +7,9 @@ type LetterBoxProps = {
   status: LetterStatus
 }
 
-function LetterBox (props: LetterBoxProps) {
+function LetterBox ({ letter, status }: LetterBoxProps) {
   let className = 'letter-box '
-  switch (props.status) {
+  switch (status) {
     case LetterStatus.GOOD_POSITION:
       className += 'good-position'
       break
@@ -25,7 +25,7 @@ function LetterBox (props: LetterBoxProps) {
   }
   return (
     <span className={className} data-testid='letter-box'>
-      {props.letter.toUpperCase()}
+      {letter.toUpperCase()}
     </span>
   )
 }
