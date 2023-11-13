@@ -1,5 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import LetterBox from './LetterBox'
+import {
+  STATUS_BAD_POSITION,
+  STATUS_GOOD_POSITION,
+  STATUS_NOT_PRESENT,
+  STATUS_UNKNOWN
+} from '../../model'
 import { LetterStatus } from '../../model'
 
 test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
@@ -14,17 +20,17 @@ test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
 )
 
 test.each([
-  ['letter-box good-position', LetterStatus.GOOD_POSITION],
-  ['letter-box bad-position', LetterStatus.BAD_POSITION],
-  ['letter-box not-present', LetterStatus.NOT_PRESENT],
-  ['letter-box unknown', LetterStatus.UNKNOWN]
+  [STATUS_GOOD_POSITION, LetterStatus.GOOD_POSITION],
+  [STATUS_BAD_POSITION, LetterStatus.BAD_POSITION],
+  [STATUS_NOT_PRESENT, LetterStatus.NOT_PRESENT],
+  [STATUS_UNKNOWN, LetterStatus.UNKNOWN]
 ])(
-  "has css classes '%s' when status is %s",
-  (expectedClass: string, status: LetterStatus) => {
+  "has data-status '%s' when status is %s",
+  (expectedDataStatus: string, status: LetterStatus) => {
     render(<LetterBox letter='a' status={status} />)
 
     const lb = screen.getByTestId('letter-box')
 
-    expect(lb).toHaveClass(expectedClass)
+    expect(lb).toHaveAttribute('data-status', expectedDataStatus)
   }
 )

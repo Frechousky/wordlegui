@@ -1,3 +1,9 @@
+import {
+  STATUS_GOOD_POSITION,
+  STATUS_BAD_POSITION,
+  STATUS_NOT_PRESENT,
+  STATUS_UNKNOWN
+} from '../../model'
 import { LetterStatus } from '../../model'
 
 import './LetterBox.css'
@@ -8,23 +14,27 @@ type LetterBoxProps = {
 }
 
 function LetterBox ({ letter, status }: LetterBoxProps) {
-  let className = 'letter-box '
+  let dataStatus = ''
   switch (status) {
     case LetterStatus.GOOD_POSITION:
-      className += 'good-position'
+      dataStatus = STATUS_GOOD_POSITION
       break
     case LetterStatus.BAD_POSITION:
-      className += 'bad-position'
+      dataStatus = STATUS_BAD_POSITION
       break
     case LetterStatus.NOT_PRESENT:
-      className += 'not-present'
+      dataStatus = STATUS_NOT_PRESENT
       break
     case LetterStatus.UNKNOWN:
-      className += 'unknown'
+      dataStatus = STATUS_UNKNOWN
       break
   }
   return (
-    <span className={className} data-testid='letter-box'>
+    <span
+      className='letter-box'
+      data-testid='letter-box'
+      data-status={dataStatus}
+    >
       {letter.toUpperCase()}
     </span>
   )
