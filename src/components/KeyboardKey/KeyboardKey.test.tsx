@@ -1,20 +1,25 @@
 import { render, screen } from '@testing-library/react'
-import { BACKSPACE_KEY, LetterStatus, RETURN_KEY } from '../../model'
+import {
+  KEY_BACKSPACE,
+  LetterStatus,
+  KEY_RETURN,
+  KeyboardKeyType
+} from '../../model'
 import KeyboardKey from './KeyboardKey'
 
-test.each('abcdefghijklmnopqrstuvwxyz'.split(''))(
+test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('') as KeyboardKeyType[])(
   "renders '%s' key correctly",
-  (key: string) => {
+  (key: KeyboardKeyType) => {
     render(<KeyboardKey value={key} status={LetterStatus.GOOD_POSITION} />)
 
     const kk = screen.getByRole('button')
 
-    expect(kk).toHaveTextContent(new RegExp(`^${key.toUpperCase()}$`))
+    expect(kk).toHaveTextContent(new RegExp(`^${key}$`))
   }
 )
 
 test("renders 'backspace' key correctly", () => {
-  render(<KeyboardKey value={BACKSPACE_KEY} status={LetterStatus.UNKNOWN} />)
+  render(<KeyboardKey value={KEY_BACKSPACE} status={LetterStatus.UNKNOWN} />)
 
   const kk = screen.getByRole('button')
   const icon = screen.getByRole('img', { hidden: true })
@@ -24,7 +29,7 @@ test("renders 'backspace' key correctly", () => {
 })
 
 test("renders 'return' key correctly", () => {
-  render(<KeyboardKey value={RETURN_KEY} status={LetterStatus.UNKNOWN} />)
+  render(<KeyboardKey value={KEY_RETURN} status={LetterStatus.UNKNOWN} />)
 
   const kk = screen.getByRole('button')
   const icon = screen.getByRole('img', { hidden: true })
@@ -34,17 +39,14 @@ test("renders 'return' key correctly", () => {
 })
 
 test.each([
-  ['keyboard-key good-position', LetterStatus.GOOD_POSITION],
-  ['keyboard-key bad-position', LetterStatus.BAD_POSITION],
-  ['keyboard-key not-present', LetterStatus.NOT_PRESENT],
-  ['keyboard-key unknown', LetterStatus.UNKNOWN]
-])(
-  'has correct css classes when status is %s',
-  (expectedClass: string, status: LetterStatus) => {
-    render(<KeyboardKey value='a' status={status} />)
+  LetterStatus.GOOD_POSITION,
+  LetterStatus.BAD_POSITION,
+  LetterStatus.NOT_PRESENT,
+  LetterStatus.UNKNOWN
+])('has correct data-status', (status: LetterStatus) => {
+  render(<KeyboardKey value='A' status={status} />)
 
-    const kk = screen.getByRole('button')
+  const kk = screen.getByRole('button')
 
-    expect(kk).toHaveClass(expectedClass)
-  }
-)
+  expect(kk).toHaveAttribute('data-status', `${status}`)
+})

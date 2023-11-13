@@ -1,33 +1,28 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {
-  BACKSPACE_KEY,
+  KEY_BACKSPACE,
   KEYBOARD_AZERTY,
-  KEYBOARD_ROW_DELIM,
-  RETURN_KEY
+  KEY_RETURN,
+  KeyboardKeyType
 } from '../../model'
 import Keyboard from './Keyboard'
 
-test.each(new Array(KEYBOARD_AZERTY))(
+test.each([[KEYBOARD_AZERTY]])(
   'keyboard renders correctly',
-  (keys: string) => {
+  (keys: KeyboardKeyType[][]) => {
     render(<Keyboard keys={keys} />)
 
-    const keyboardKeys = screen.getAllByRole('button')
+    keys.forEach(row => {
+      row.forEach(key => {
+        if (key === KEY_BACKSPACE || key === KEY_RETURN) {
+          return
+        }
+        const kk = screen.getByText(new RegExp(key, 'i'))
 
-    const keysArray = keys.replaceAll(KEYBOARD_ROW_DELIM, '').split('')
-    expect(keyboardKeys).toHaveLength(keysArray.length)
-
-    for (let i = 0; i < keysArray.length; i++) {
-      const key = keysArray[i]
-      if (key === BACKSPACE_KEY || key === RETURN_KEY) {
-        continue
-      }
-
-      const kk = screen.getByText(new RegExp(key, 'i'))
-
-      expect(kk).toBeInTheDocument()
-    }
+        expect(kk).toBeInTheDocument()
+      })
+    })
   }
 )
 
@@ -45,7 +40,7 @@ test('calls correct handler when clicking letter key', () => {
     />
   )
 
-  userEvent.click(screen.getByTestId('keyboard-key-a'))
+  userEvent.click(screen.getByTestId('keyboard-key-A'))
 
   expect(mockHandleOnLetterClick).toBeCalledTimes(1)
   expect(mockHandleOnBackspaceClick).toBeCalledTimes(0)
@@ -66,7 +61,7 @@ test('calls correct handler when clicking backspace key', () => {
     />
   )
 
-  userEvent.click(screen.getByTestId(`keyboard-key-${BACKSPACE_KEY}`))
+  userEvent.click(screen.getByTestId(`keyboard-key-${KEY_BACKSPACE}`))
 
   expect(mockHandleOnLetterClick).toBeCalledTimes(0)
   expect(mockHandleOnBackspaceClick).toBeCalledTimes(1)
@@ -87,7 +82,7 @@ test('calls correct handler when clicking return key', () => {
     />
   )
 
-  userEvent.click(screen.getByTestId(`keyboard-key-${RETURN_KEY}`))
+  userEvent.click(screen.getByTestId(`keyboard-key-${KEY_RETURN}`))
 
   expect(mockHandleOnLetterClick).toBeCalledTimes(0)
   expect(mockHandleOnBackspaceClick).toBeCalledTimes(0)

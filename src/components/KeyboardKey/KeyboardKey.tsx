@@ -1,44 +1,36 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { BACKSPACE_KEY, LetterStatus, RETURN_KEY } from '../../model'
+import {
+  KEY_BACKSPACE,
+  LetterStatus,
+  KEY_RETURN,
+  KeyboardKeyType
+} from '../../model'
 import { MouseEventHandler } from 'react'
 
 import './KeyboardKey.css'
 
 export type KeyboardKeyProps = {
-  value: string
+  value: KeyboardKeyType
   status: LetterStatus
   handleOnClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 function KeyboardKey ({ value, status, handleOnClick }: KeyboardKeyProps) {
-  let className = 'keyboard-key '
-  switch (status) {
-    case LetterStatus.GOOD_POSITION:
-      className += 'good-position'
-      break
-    case LetterStatus.BAD_POSITION:
-      className += 'bad-position'
-      break
-    case LetterStatus.NOT_PRESENT:
-      className += 'not-present'
-      break
-    case LetterStatus.UNKNOWN:
-      className += 'unknown'
-      break
-  }
   return (
     <button
-      className={className}
+      className='keyboard-key'
       data-testid={`keyboard-key-${value}`}
+      data-status={status}
+      data-value={value}
       onClick={handleOnClick}
     >
-      {value === BACKSPACE_KEY ? (
+      {value === KEY_BACKSPACE ? (
         <FontAwesomeIcon icon={faDeleteLeft} />
-      ) : value === RETURN_KEY ? (
+      ) : value === KEY_RETURN ? (
         <FontAwesomeIcon icon={faCheck} />
       ) : (
-        value.toUpperCase()
+        value
       )}
     </button>
   )

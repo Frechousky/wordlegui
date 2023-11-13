@@ -1,18 +1,18 @@
 import { MouseEventHandler, ReactElement } from 'react'
 import {
-  BACKSPACE_KEY,
-  KEYBOARD_ROW_DELIM,
+  KEY_BACKSPACE,
   LetterStatus,
-  RETURN_KEY
+  KEY_RETURN,
+  KeyboardKeyType
 } from '../../model'
 import KeyboardKey from '../KeyboardKey/KeyboardKey'
 
 import './Keyboard.css'
 
 export type KeyboardProps = {
-  keys: string
+  keys: KeyboardKeyType[][]
   handleOnLetterClickWrapper?: (
-    key: string
+    key: KeyboardKeyType
   ) => MouseEventHandler<HTMLButtonElement>
   handleOnBackspaceClick?: MouseEventHandler<HTMLButtonElement>
   handleOnReturnClick?: MouseEventHandler<HTMLButtonElement>
@@ -25,18 +25,18 @@ function Keyboard ({
   handleOnReturnClick
 }: KeyboardProps) {
   const keyRows: ReactElement[] = []
-  keys.split(KEYBOARD_ROW_DELIM).forEach((row, idx) => {
+  keys.forEach((row, idx) => {
     const keyRow: ReactElement[] = []
-    row.split('').forEach(key => {
+    row.forEach(key => {
       keyRow.push(
         <KeyboardKey
           value={key}
           status={LetterStatus.UNKNOWN}
           key={key}
           handleOnClick={
-            key === BACKSPACE_KEY
+            key === KEY_BACKSPACE
               ? handleOnBackspaceClick
-              : key === RETURN_KEY
+              : key === KEY_RETURN
               ? handleOnReturnClick
               : handleOnLetterClickWrapper && handleOnLetterClickWrapper(key)
           }
