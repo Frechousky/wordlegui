@@ -1,17 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft, faCheck } from '@fortawesome/free-solid-svg-icons'
-import {
-  KEY_BACKSPACE,
-  LetterStatus,
-  KEY_RETURN,
-  KeyboardKeyType
-} from '../../model'
+import { KEY_BACKSPACE, LetterStatus, KEY_RETURN } from '../../model'
 import { MouseEventHandler } from 'react'
 
 import './KeyboardKey.css'
 
 export type KeyboardKeyProps = {
-  value: KeyboardKeyType
+  value: string
   status: LetterStatus
   handleOnClick?: MouseEventHandler<HTMLButtonElement>
 }

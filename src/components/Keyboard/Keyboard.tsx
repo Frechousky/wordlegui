@@ -1,18 +1,13 @@
 import { MouseEventHandler, ReactElement } from 'react'
-import {
-  KEY_BACKSPACE,
-  LetterStatus,
-  KEY_RETURN,
-  KeyboardKeyType
-} from '../../model'
+import { KEY_BACKSPACE, LetterStatus, KEY_RETURN } from '../../model'
 import KeyboardKey from '../KeyboardKey/KeyboardKey'
 
 import './Keyboard.css'
 
 export type KeyboardProps = {
-  keys: KeyboardKeyType[][]
+  keys: string[][]
   handleOnLetterClickWrapper?: (
-    key: KeyboardKeyType
+    key: string
   ) => MouseEventHandler<HTMLButtonElement>
   handleOnBackspaceClick?: MouseEventHandler<HTMLButtonElement>
   handleOnReturnClick?: MouseEventHandler<HTMLButtonElement>

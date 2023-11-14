@@ -1,16 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import {
-  KEY_BACKSPACE,
-  KEYBOARD_AZERTY,
-  KEY_RETURN,
-  KeyboardKeyType
-} from '../../model'
+import { KEY_BACKSPACE, KEYBOARD_AZERTY, KEY_RETURN } from '../../model'
 import Keyboard from './Keyboard'
 
 test.each([[KEYBOARD_AZERTY]])(
   'keyboard renders correctly',
-  (keys: KeyboardKeyType[][]) => {
+  (keys: string[][]) => {
     render(<Keyboard keys={keys} />)
 
     keys.forEach(row => {

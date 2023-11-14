@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import LetterBox from './LetterBox'
-import { LetterBoxType } from '../../model'
 import { LetterStatus } from '../../model'
 
-test.each('ABCDEFGHIJKLNOPQRSTUVWXYZ_'.split('') as LetterBoxType[])(
+test.each('ABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
   "renders input letter '%s'",
-  (letter: LetterBoxType) => {
+  (letter: string) => {
     render(<LetterBox value={letter} status={LetterStatus.UNKNOWN} />)
 
     const lb = screen.getByTestId('letter-box')

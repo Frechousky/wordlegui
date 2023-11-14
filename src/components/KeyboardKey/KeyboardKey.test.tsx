@@ -1,15 +1,10 @@
 import { render, screen } from '@testing-library/react'
-import {
-  KEY_BACKSPACE,
-  LetterStatus,
-  KEY_RETURN,
-  KeyboardKeyType
-} from '../../model'
+import { KEY_BACKSPACE, LetterStatus, KEY_RETURN } from '../../model'
 import KeyboardKey from './KeyboardKey'
 
-test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('') as KeyboardKeyType[])(
+test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
   "renders '%s' key correctly",
-  (key: KeyboardKeyType) => {
+  (key: string) => {
     render(<KeyboardKey value={key} status={LetterStatus.GOOD_POSITION} />)
 
     const kk = screen.getByRole('button')

@@ -1,11 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import Grid from './Grid'
 import assert from 'assert'
-import { LetterBoxType, LetterStatus as LS } from '../../model'
-
-const stringToLetterBoxTypeArray = (s: string) => {
-  return s.split('') as LetterBoxType[]
-}
+import { LetterStatus as LS } from '../../model'
 
 test.each([
   [6, ['azerty', 'abattu', 'fiable', 'lamper', 'lezard', 'maudit', 'merlan']]
@@ -19,7 +15,7 @@ test.each([
         <Grid
           maxAttempts={maxAttempts}
           wordLength={6}
-          words={words.map(stringToLetterBoxTypeArray)}
+          words={words}
           statuses={[]}
         />
       )
@@ -42,7 +38,7 @@ test.each([
         <Grid
           maxAttempts={6}
           wordLength={wordLength}
-          words={words.map(stringToLetterBoxTypeArray)}
+          words={words}
           statuses={[]}
         />
       )
@@ -87,7 +83,7 @@ test.each([
         <Grid
           maxAttempts={maxAttempts}
           wordLength={6}
-          words={words.map(stringToLetterBoxTypeArray)}
+          words={words}
           statuses={statuses}
         />
       )
@@ -142,7 +138,7 @@ test.each([
         <Grid
           maxAttempts={6}
           wordLength={wordLength}
-          words={words.map(stringToLetterBoxTypeArray)}
+          words={words}
           statuses={statuses}
         />
       )
@@ -201,7 +197,7 @@ test.each([
       <Grid
         maxAttempts={6}
         wordLength={wordLength}
-        words={words.map(stringToLetterBoxTypeArray)}
+        words={words}
         statuses={statuses}
       />
     )

@@ -1,10 +1,9 @@
-import { LetterBoxType } from '../../model'
 import { LetterStatus } from '../../model'
 
 import './LetterBox.css'
 
 type LetterBoxProps = {
-  value: LetterBoxType
+  value: string
   status: LetterStatus
 }
 

@@ -1,4 +1,4 @@
-import { LetterBoxType, LetterStatus } from '../../model'
+import { LetterStatus } from '../../model'
 import LetterBox from '../LetterBox/LetterBox'
 
 import './Grid.css'
@@ -6,7 +6,7 @@ import './Grid.css'
 type GridProps = {
   maxAttempts: number
   wordLength: number
-  words: LetterBoxType[][]
+  words: string[]
   statuses: LetterStatus[][]
 }
 function Grid ({ maxAttempts = 6, wordLength, words, statuses }: GridProps) {
