@@ -1,11 +1,14 @@
 import { render, screen } from '@testing-library/react'
-import { KEY_BACKSPACE, LetterStatus, KEY_RETURN } from '../../model'
-import KeyboardKey from './KeyboardKey'
+import { KEY_BACKSPACE, KEY_RETURN } from '../../constants'
+import { CharacterStatus } from '../../constants'
+import GameKeyboardKey from './GameKeyboardKey'
 
 test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
   "renders '%s' key correctly",
   (key: string) => {
-    render(<KeyboardKey value={key} status={LetterStatus.GOOD_POSITION} />)
+    render(
+      <GameKeyboardKey value={key} status={CharacterStatus.GOOD_POSITION} />
+    )
 
     const kk = screen.getByRole('button')
 
@@ -14,7 +17,9 @@ test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
 )
 
 test("renders 'backspace' key correctly", () => {
-  render(<KeyboardKey value={KEY_BACKSPACE} status={LetterStatus.UNKNOWN} />)
+  render(
+    <GameKeyboardKey value={KEY_BACKSPACE} status={CharacterStatus.UNKNOWN} />
+  )
 
   const kk = screen.getByRole('button')
   const icon = screen.getByRole('img', { hidden: true })
@@ -24,7 +29,9 @@ test("renders 'backspace' key correctly", () => {
 })
 
 test("renders 'return' key correctly", () => {
-  render(<KeyboardKey value={KEY_RETURN} status={LetterStatus.UNKNOWN} />)
+  render(
+    <GameKeyboardKey value={KEY_RETURN} status={CharacterStatus.UNKNOWN} />
+  )
 
   const kk = screen.getByRole('button')
   const icon = screen.getByRole('img', { hidden: true })
@@ -34,12 +41,12 @@ test("renders 'return' key correctly", () => {
 })
 
 test.each([
-  LetterStatus.GOOD_POSITION,
-  LetterStatus.BAD_POSITION,
-  LetterStatus.NOT_PRESENT,
-  LetterStatus.UNKNOWN
-])('has correct data-status', (status: LetterStatus) => {
-  render(<KeyboardKey value='A' status={status} />)
+  CharacterStatus.GOOD_POSITION,
+  CharacterStatus.BAD_POSITION,
+  CharacterStatus.NOT_PRESENT,
+  CharacterStatus.UNKNOWN
+])('has correct data-status', (status: CharacterStatus) => {
+  render(<GameKeyboardKey value='A' status={status} />)
 
   const kk = screen.getByRole('button')
 

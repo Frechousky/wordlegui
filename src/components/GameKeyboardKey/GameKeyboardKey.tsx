@@ -1,21 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { KEY_BACKSPACE, LetterStatus, KEY_RETURN } from '../../model'
+import { KEY_BACKSPACE, KEY_RETURN } from '../../constants'
+import { CharacterStatus } from '../../constants'
 import { MouseEventHandler } from 'react'
 
-import './KeyboardKey.css'
+import './GameKeyboardKey.css'
 
-export type KeyboardKeyProps = {
+export type GameKeyboardKeyProps = {
   value: string
-  status: LetterStatus
+  status: CharacterStatus
   handleOnClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-function KeyboardKey ({ value, status, handleOnClick }: KeyboardKeyProps) {
+function GameKeyboardKey ({
+  value,
+  status,
+  handleOnClick
+}: GameKeyboardKeyProps) {
   return (
     <button
-      className='keyboard-key'
-      data-testid={`keyboard-key-${value}`}
+      className='game-keyboard-key'
+      data-testid={`game-keyboard-key-${value}`}
       data-status={status}
       data-value={value}
       onClick={handleOnClick}
@@ -31,4 +36,4 @@ function KeyboardKey ({ value, status, handleOnClick }: KeyboardKeyProps) {
   )
 }
 
-export default KeyboardKey
+export default GameKeyboardKey
