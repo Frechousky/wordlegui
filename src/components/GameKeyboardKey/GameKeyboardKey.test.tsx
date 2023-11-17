@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { KEY_BACKSPACE, KEY_RETURN } from '../../constants'
+import { KEY_BACKSPACE, KEY_EMPTY, KEY_RETURN } from '../../constants'
 import { CharacterStatus } from '../../constants'
 import GameKeyboardKey from './GameKeyboardKey'
 
@@ -22,10 +22,10 @@ test("renders 'backspace' key correctly", () => {
   )
 
   const kk = screen.getByRole('button')
-  const icon = screen.getByRole('img', { hidden: true })
+  const icon = screen.getByTestId('BackspaceIcon')
 
   expect(kk).toHaveTextContent('')
-  expect(icon).toHaveClass('fa-delete-left')
+  expect(icon).toBeInTheDocument()
 })
 
 test("renders 'return' key correctly", () => {
@@ -34,10 +34,19 @@ test("renders 'return' key correctly", () => {
   )
 
   const kk = screen.getByRole('button')
-  const icon = screen.getByRole('img', { hidden: true })
+  const icon = screen.getByTestId('SendIcon')
 
   expect(kk).toHaveTextContent('')
-  expect(icon).toHaveClass('fa-check')
+  expect(icon).toBeInTheDocument()
+})
+
+test("renders 'empty' key correctly", () => {
+  render(<GameKeyboardKey value={KEY_EMPTY} status={CharacterStatus.UNKNOWN} />)
+
+  const kk = screen.getByRole('button')
+
+  expect(kk).toHaveTextContent('')
+  expect(kk).toHaveAttribute('disabled')
 })
 
 test.each([

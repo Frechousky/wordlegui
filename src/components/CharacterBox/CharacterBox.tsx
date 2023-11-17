@@ -1,6 +1,5 @@
+import { Chip } from '@mui/material'
 import { CharacterStatus } from '../../constants'
-
-import './CharacterBox.css'
 
 type CharacterBoxProps = {
   character: string
@@ -9,13 +8,25 @@ type CharacterBoxProps = {
 
 function CharacterBox ({ character, status }: CharacterBoxProps) {
   return (
-    <span
-      className='character-box'
+    <Chip
+      color={
+        status === CharacterStatus.GOOD_POSITION
+          ? 'success'
+          : status === CharacterStatus.BAD_POSITION
+          ? 'info'
+          : status === CharacterStatus.NOT_PRESENT
+          ? 'error'
+          : 'secondary'
+      }
+      sx={{
+        minHeight: '50px',
+        minWidth: '50px',
+        borderRadius: '25px'
+      }}
+      label={character}
       data-testid='character-box'
       data-status={status}
-    >
-      {character}
-    </span>
+    ></Chip>
   )
 }
 

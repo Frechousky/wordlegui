@@ -1,10 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDeleteLeft, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { KEY_BACKSPACE, KEY_RETURN } from '../../constants'
-import { CharacterStatus } from '../../constants'
 import { MouseEventHandler } from 'react'
+import {
+  CharacterStatus,
+  KEY_BACKSPACE,
+  KEY_EMPTY,
+  KEY_RETURN
+} from '../../constants'
 
-import './GameKeyboardKey.css'
+import { Backspace, Send } from '@mui/icons-material'
+import { Button } from '@mui/material'
 
 export type GameKeyboardKeyProps = {
   value: string
@@ -18,21 +21,24 @@ function GameKeyboardKey ({
   handleOnClick
 }: GameKeyboardKeyProps) {
   return (
-    <button
-      className='game-keyboard-key'
+    <Button
+      variant='contained'
       data-testid={`game-keyboard-key-${value}`}
       data-status={status}
       data-value={value}
+      disabled={value === KEY_EMPTY}
       onClick={handleOnClick}
     >
       {value === KEY_BACKSPACE ? (
-        <FontAwesomeIcon icon={faDeleteLeft} />
+        <Backspace />
       ) : value === KEY_RETURN ? (
-        <FontAwesomeIcon icon={faCheck} />
+        <Send />
+      ) : value === KEY_EMPTY ? (
+        ''
       ) : (
         value
       )}
-    </button>
+    </Button>
   )
 }
 

@@ -14,11 +14,12 @@ export const LETTER_UNKNOWN = '_'
 
 export const KEY_BACKSPACE = '0'
 export const KEY_RETURN = '1'
+export const KEY_EMPTY = '2'
 
 export const KEYBOARDS: Keyboard[] = [
-    { name: 'AZERTY', keys: [`AZERTYUIOP${KEY_BACKSPACE}`.split(''), `QSDFGHJKLM${KEY_RETURN}`.split(''), 'WXCVBN'.split('')], },
-    { name: 'QWERTY', keys: [`QWERTYUIOP${KEY_BACKSPACE}`.split(''), `ASDFGHJKL${KEY_RETURN}`.split(''), 'ZXCVBNM'.split('')], },
-    { name: 'BEPO', keys: [`BEPOVDLJZW${KEY_BACKSPACE}`.split(''), `AUICTSRNM${KEY_RETURN}`.split(''), 'YXKQGHF'.split('')], }
+    { name: 'AZERTY', keys: ['AZERTYUIOP'.split(''), 'QSDFGHJKLM'.split(''), `WXCVBN${KEY_EMPTY}${KEY_EMPTY}${KEY_BACKSPACE}${KEY_RETURN}`.split('')], },
+    { name: 'QWERTY', keys: [`QWERTYUIOP`.split(''), `ASDFGHJKL${KEY_EMPTY}`.split(''), `ZXCVBNM${KEY_EMPTY}${KEY_BACKSPACE}${KEY_RETURN}`.split('')], },
+    { name: 'BEPO', keys: [`BEPOVDLJZW`.split(''), `AUICTSRNM${KEY_EMPTY}`.split(''), `YXKQGHF${KEY_EMPTY}${KEY_BACKSPACE}${KEY_RETURN}`.split('')], }
 ]
 
 export const WORD_LENGTHS = [6, 7, 8]

@@ -1,9 +1,9 @@
 import { MouseEventHandler, ReactElement } from 'react'
-import { KEY_BACKSPACE, KEY_RETURN } from '../../constants'
+import { KEY_BACKSPACE, KEY_EMPTY, KEY_RETURN } from '../../constants'
 import { CharacterStatus, Keyboard } from '../../constants'
 import GameKeyboardKey from '../GameKeyboardKey/GameKeyboardKey'
 
-import './GameKeyboard.css'
+import { Box, ButtonGroup } from '@mui/material'
 
 export type GameKeyboardProps = {
   keyboard: Keyboard
@@ -34,6 +34,8 @@ function GameKeyboard ({
               ? handleOnBackspaceClick
               : key === KEY_RETURN
               ? handleOnReturnClick
+              : key === KEY_EMPTY
+              ? undefined
               : handleOnCharacterClickWrapper &&
                 handleOnCharacterClickWrapper(key)
           }
@@ -41,12 +43,12 @@ function GameKeyboard ({
       )
     })
     keyboardRows.push(
-      <div className='game-keyboard-row-container' key={idx}>
+      <ButtonGroup fullWidth key={idx}>
         {keyboardRow}
-      </div>
+      </ButtonGroup>
     )
   })
-  return <div className='game-keyboard-container'>{keyboardRows}</div>
+  return <Box>{keyboardRows}</Box>
 }
 
 export default GameKeyboard

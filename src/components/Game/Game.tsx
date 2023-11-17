@@ -17,6 +17,19 @@ import GameKeyboard from '../GameKeyboard/GameKeyboard'
 import GameSettingsForm from '../GameSettingsForm/GameSettingsForm'
 import Header from '../Header/Header'
 import ErrorPanel from '../ErrorPanel/ErrorPanel'
+import {
+  Box,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  ThemeProvider,
+  createTheme
+} from '@mui/material'
+import createPalette, {
+  PaletteOptions
+} from '@mui/material/styles/createPalette'
 
 type GameProps = {
   wordLength: number
@@ -31,14 +44,8 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
     loadGame(wordLength, dateMMMMYYDD)
   )
   const [settings, setSettings] = useState(loadSettings())
-  const [displayGameSettingsForm, setDisplayGameSettingsForm] = useState(true)
-  const [error, setError] = useState({
-    message: '',
-    tid: null
-  } as {
-    message: string
-    tid: null | NodeJS.Timeout
-  })
+  const [displayGameSettingsForm, setDisplayGameSettingsForm] = useState(false)
+  const [error, setError] = useState('')
   useEffect(() => {
     document.addEventListener('keydown', handleKeydown)
     return () => {
@@ -60,18 +67,9 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
     document.timeline
   )
 
-  function displayError (msg: string) {
+  function displayError (message: string) {
     shakeAnimation.play()
-    if (error.tid) {
-      // clear previous timeout to make sure {msg} is displayed {ERROR_DISPLAY_TIME} milliseconds
-      clearTimeout(error.tid)
-    }
-    // remove error message after {ERROR_DISPLAY_TIME} milliseconds
-    const tid = setTimeout(
-      () => setError({ message: '', tid: null }),
-      ERROR_DISPLAY_TIME
-    )
-    setError({ message: msg, tid: tid })
+    setError(message)
   }
 
   function addCharacter (key: string) {
@@ -135,7 +133,6 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
   }
 
   function onWordLengthChange (e: any) {
-    e.target.blur()
     dispatch(buildUpdateWordLengthAction(Number(e.target.value)))
   }
 
@@ -151,33 +148,37 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
   if (displayGameSettingsForm) {
     content = <GameSettingsForm settings={settings} setSettings={setSettings} />
   } else {
-    const wordLengthsSelectOptions = WORD_LENGTHS.map((wordLength, index) => {
-      return (
-        <option value={wordLength} key={index}>
-          {wordLength}
-        </option>
-      )
-    })
     content = (
       <>
-        (
-        <div style={{ textAlign: 'center' }}>
-          <label htmlFor='wordLength'>Changer la taille du mot à deviner</label>
-          &nbsp;
-          <select
-            id='wordLength'
-            onChange={onWordLengthChange}
-            value={data.wordLength}
-          >
-            {wordLengthsSelectOptions}
-          </select>
-        </div>
-        <GameGrid
-          maxAttempts={data.maxAttempts}
-          wordLength={data.wordLength}
-          words={words}
-          statuses={data.characterPositionStatuses}
-        />
+        <Box>
+          <FormControl>
+            <InputLabel id='word-length-select-label'>
+              Longueur de mot
+            </InputLabel>
+            <Select
+              labelId='word-length-select-label'
+              id='word-length-select'
+              value={data.wordLength}
+              label='Longueur de mot'
+              onChange={onWordLengthChange}
+              fullWidth={true}
+            >
+              {WORD_LENGTHS.map((wordLength, index) => {
+                return (
+                  <MenuItem key={index} value={wordLength}>
+                    {wordLength}
+                  </MenuItem>
+                )
+              })}
+            </Select>
+          </FormControl>
+        </Box>
+        <Box>
+          <GameGrid
+            words={words}
+            statuses={data.prevAttemptsPositionStatuses}
+          />
+        </Box>
         <GameKeyboard
           keyboard={settings.keyboard}
           handleOnCharacterClickWrapper={key => {
@@ -188,16 +189,52 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
           handleOnBackspaceClick={removeLastCharacter}
           handleOnReturnClick={submitPlayerAttempt}
         />
-        )
       </>
     )
   }
+  const paletteOptions: PaletteOptions = {
+    mode: 'light'
+    // primary: {
+    //   main: '#DF9900'
+    // },
+
+    // secondary: {
+    //   main: '#113397'
+    // },
+
+    // success: {
+    //   main: '#62D62C'
+    // },
+
+    // info: {
+    //   main: '#008CFF'
+    // },
+
+    // warning: {
+    //   main: '#F9E109'
+    // },
+
+    // error: {
+    //   main: '#FF4750'
+    // }
+  }
+  const palette = createPalette(paletteOptions)
+  const theme = createTheme({ palette: palette })
   return (
-    <div id='game'>
-      <Header title='Wordle' />
-      <ErrorPanel message={error.message} />
-      {content}
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container sx={{ textAlign: 'center' }}>
+        <Header title='Wordle' />
+        {error && (
+          <ErrorPanel
+            message={error}
+            onClose={() => {
+              setError('')
+            }}
+          />
+        )}
+        {content}
+      </Container>
+    </ThemeProvider>
   )
 }
 

@@ -1,34 +1,29 @@
 import { CharacterStatus } from '../../constants'
 import CharacterBox from '../CharacterBox/CharacterBox'
 
-import './GameGrid.css'
-import { StatusPositionMap } from '../../persistence'
+import { Box } from '@mui/material'
 
 type GameGridProps = {
-  maxAttempts: number
-  wordLength: number
   words: string[]
-  statuses: StatusPositionMap
+  statuses: CharacterStatus[][]
 }
 
-function GameGrid ({ maxAttempts, wordLength, words, statuses }: GameGridProps) {
-  if (words.length !== maxAttempts) {
-    throw Error(
-      `Invalid word count (expected: ${maxAttempts}, got: ${words.length})`
-    )
-  }
+function GameGrid ({ words, statuses }: GameGridProps) {
+  const maxAttempts = words.length
+  const wordLength = words[0].length
   if (words.some(v => v.length !== wordLength)) {
     throw Error('At least one word with invalid length')
+  }
+  if (statuses.some(v => v.length !== wordLength)) {
+    throw Error('At least one status with invalid length')
   }
   const rows = []
   for (let i = 0; i < maxAttempts; i++) {
     const row = []
     for (let j = 0; j < wordLength; j++) {
       const character = words[i][j]
-      let status = statuses[character] ? statuses[character][j] : undefined
-      if (status === undefined) {
-        status = CharacterStatus.UNKNOWN
-      }
+      const status =
+        statuses.length > i ? statuses[i][j] : CharacterStatus.UNKNOWN
       row.push(
         <CharacterBox
           character={character}
@@ -37,13 +32,9 @@ function GameGrid ({ maxAttempts, wordLength, words, statuses }: GameGridProps) 
         />
       )
     }
-    rows.push(
-      <div className='game-grid-row-container' key={i}>
-        {row}
-      </div>
-    )
+    rows.push(<Box key={i}>{row}</Box>)
   }
-  return <div className='game-grid-container'>{rows}</div>
+  return <Box>{rows}</Box>
 }
 
 export default GameGrid

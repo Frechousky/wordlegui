@@ -9,9 +9,9 @@ test.each('ABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
       <CharacterBox character={character} status={CharacterStatus.UNKNOWN} />
     )
 
-    const lb = screen.getByTestId('character-box')
+    const cb = screen.getByTestId('character-box')
 
-    expect(lb).toHaveTextContent(new RegExp(`^${character}$`))
+    expect(cb).toHaveTextContent(new RegExp(`^${character}$`))
   }
 )
 
@@ -23,7 +23,7 @@ test.each([
 ])('has correct data-status', (status: CharacterStatus) => {
   render(<CharacterBox character='A' status={status} />)
 
-  const lb = screen.getByTestId('character-box')
+  const cb = screen.getByTestId('character-box')
 
-  expect(lb).toHaveAttribute('data-status', `${status}`)
+  expect(cb).toHaveAttribute('data-status', `${status}`)
 })

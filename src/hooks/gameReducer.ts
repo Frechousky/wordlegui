@@ -81,13 +81,7 @@ function addAttempt(action: GameReducerAction, game: GameData) {
     }
     const newGame = { ...game }
     newGame.previousAttempts = [...newGame.previousAttempts, action.attempt]
-    newGame.characterPositionStatuses = { ...newGame.characterPositionStatuses }
-    for (let i = 0; i < action.attempt.length; i++) {
-        if (newGame.characterPositionStatuses[action.attempt.charAt(i)] === undefined) {
-            newGame.characterPositionStatuses[action.attempt.charAt(i)] = {}
-        }
-        newGame.characterPositionStatuses[action.attempt.charAt(i)][i] = wordleApiCharacterStatusToCharacterStatus(action.attemptResult[i])
-    }
+    newGame.prevAttemptsPositionStatuses = [...newGame.prevAttemptsPositionStatuses, action.attemptResult.map(wordleApiCharacterStatusToCharacterStatus)]
     newGame.currentAttempt = ''
     saveGame(newGame)
     return newGame

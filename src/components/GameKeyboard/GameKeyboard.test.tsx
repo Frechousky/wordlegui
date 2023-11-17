@@ -1,15 +1,20 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { KEY_BACKSPACE, KEYBOARDS, KEY_RETURN } from '../../constants'
+import {
+  KEYBOARDS,
+  KEY_BACKSPACE,
+  KEY_EMPTY,
+  KEY_RETURN,
+  Keyboard
+} from '../../constants'
 import GameKeyboard from './GameKeyboard'
-import { Keyboard } from '../../constants'
 
 test.each([KEYBOARDS])('keyboard renders correctly', (keyboard: Keyboard) => {
   render(<GameKeyboard keyboard={keyboard} />)
 
   keyboard.keys.forEach(row => {
     row.forEach(key => {
-      if (key === KEY_BACKSPACE || key === KEY_RETURN) {
+      if (key === KEY_BACKSPACE || key === KEY_RETURN || key === KEY_EMPTY) {
         return
       }
       const kk = screen.getByText(new RegExp(key, 'i'))

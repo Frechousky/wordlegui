@@ -1,19 +1,13 @@
 import { KEYBOARDS, MAX_ATTEMPTS_BY_WORDLENGTH } from './constants'
 import { CharacterStatus, Keyboard } from './constants'
 
-export type StatusPositionMap = {
-  [key: string]: {
-    [key: number]: CharacterStatus
-  }
-}
-
 export type GameData = {
   dateYYYYMMDD: string
   wordLength: number
   maxAttempts: number
   currentAttempt: string
   previousAttempts: string[]
-  characterPositionStatuses: StatusPositionMap
+  prevAttemptsPositionStatuses: CharacterStatus[][]
 }
 
 export type Settings = {
@@ -45,7 +39,7 @@ export function loadGame (wordLength: number, dateYYYMMDD: string): GameData {
         maxAttempts: MAX_ATTEMPTS_BY_WORDLENGTH[wordLength],
         currentAttempt: '',
         previousAttempts: [],
-        characterPositionStatuses: {}
+        prevAttemptsPositionStatuses: []
       }
 }
 

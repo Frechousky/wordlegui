@@ -1,12 +1,25 @@
+import { AppBar, Box, Toolbar, Typography } from '@mui/material'
+
 export type HeaderProps = {
   title: string
 }
 
 function Header ({ title }: HeaderProps) {
   return (
-    <header>
-      <h1 style={{ textAlign: 'center' }}>{title}</h1>
-    </header>
+    <Box>
+      <AppBar position='static'>
+        <Toolbar>
+          <Typography
+            variant='h6'
+            component='div'
+            sx={{ flexGrow: 1 }}
+            align='center'
+          >
+            {title}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
   )
 }
 
