@@ -12,7 +12,7 @@ type GameReducerAction = {
     attempt?: string
     attemptResult?: WordleApiCharacterStatus[]
     wordLength?: number
-    dateYYYMMDD?: string
+    dateYYYYMMDD?: string
 }
 
 function gameReducer(game: GameData, action: GameReducerAction) {
@@ -46,10 +46,10 @@ function updateWordLength(action: GameReducerAction, game: GameData) {
 }
 
 function updateDate(action: GameReducerAction, game: GameData) {
-    if (!action.dateYYYMMDD) {
+    if (!action.dateYYYYMMDD) {
         throw Error('Missing dateYYYMMDD')
     }
-    return loadGame(game.wordLength, action.dateYYYMMDD)
+    return loadGame(game.wordLength, action.dateYYYYMMDD)
 }
 
 function removeCharacter(game: GameData) {
@@ -108,10 +108,10 @@ export function buildRemoveCharacterAction(): GameReducerAction {
     }
 }
 
-export function buildUpdateDateAction(dateYYYMMDD: string): GameReducerAction {
+export function buildUpdateDateAction(dateYYYYMMDD: string): GameReducerAction {
     return {
         type: "updateDate",
-        dateYYYMMDD: dateYYYMMDD
+        dateYYYYMMDD: dateYYYYMMDD
     }
 }
 
