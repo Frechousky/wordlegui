@@ -11,7 +11,7 @@ import gameReducer, {
   buildRemoveCharacterAction,
   buildUpdateWordLengthAction
 } from '../../hooks/gameReducer'
-import { loadGame, loadSettings } from '../../persistence'
+import { GameStatus, loadGame, loadSettings } from '../../persistence'
 import GameGrid from '../GameGrid/GameGrid'
 import GameKeyboard from '../GameKeyboard/GameKeyboard'
 import GameSettingsForm from '../GameSettingsForm/GameSettingsForm'
@@ -73,6 +73,9 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
   }
 
   function addCharacter (key: string) {
+    if (data.status !== GameStatus.IN_PROGRESS) {
+      return
+    }
     if (
       /^[a-zA-Z]$/.test(key) &&
       data.currentAttempt.length < data.wordLength
@@ -82,10 +85,16 @@ function Game ({ wordLength, dateMMMMYYDD }: GameProps) {
   }
 
   function removeLastCharacter () {
+    if (data.status !== GameStatus.IN_PROGRESS) {
+      return
+    }
     dispatch(buildRemoveCharacterAction())
   }
 
   function submitPlayerAttempt () {
+    if (data.status !== GameStatus.IN_PROGRESS) {
+      return
+    }
     if (data.currentAttempt.length < data.wordLength) {
       displayError(`Veuillez entrer un mot de ${data.wordLength} lettres`)
       return

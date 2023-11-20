@@ -2,6 +2,7 @@ import assert from "assert"
 import { WordleApiCharacterStatus } from "../clients/wordleapi"
 import gameReducer from "./gameReducer"
 import { CharacterStatus } from "../constants"
+import { GameStatus } from "../persistence"
 
 const ATTEMPT_RESULT_BAD_POSITION = Array(6).fill(WordleApiCharacterStatus.BAD_POSITION)
 
@@ -23,7 +24,8 @@ describe('gameReducer addAttempt action', () => {
                 maxAttempts: 6,
                 currentAttempt: '',
                 previousAttempts: [],
-                prevAttemptsPositionStatuses: []
+                prevAttemptsPositionStatuses: [],
+                status: GameStatus.IN_PROGRESS
             }, { type: "addAttempt", attempt: attempt, attemptResult: attemptResult })
         }
 
@@ -40,7 +42,8 @@ describe('gameReducer addAttempt action', () => {
             maxAttempts: 6,
             currentAttempt: '',
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
         assert(attempt.length !== data.wordLength)
 
@@ -68,7 +71,8 @@ describe('gameReducer addAttempt action', () => {
             maxAttempts: 6,
             currentAttempt: '',
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
         assert(attemptResult.length !== data.wordLength)
 
@@ -93,7 +97,8 @@ describe('gameReducer addAttempt action', () => {
             maxAttempts: 6,
             currentAttempt: attempt,
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
 
         const out = gameReducer(data, { type: 'addAttempt', attempt: attempt, attemptResult: attemptResult })
@@ -112,6 +117,7 @@ describe('gameReducer addAttempt action', () => {
                 CharacterStatus.NOT_PRESENT,
                 CharacterStatus.GOOD_POSITION
             ]])
+        expect(out.status).toEqual(data.status)
     })
 
     test('adds attempt correctly when there are previous attempts', () => {
@@ -139,7 +145,8 @@ describe('gameReducer addAttempt action', () => {
                     CharacterStatus.NOT_PRESENT,
                     CharacterStatus.GOOD_POSITION
                 ]
-            ]
+            ],
+            status: GameStatus.IN_PROGRESS
         }
 
         const out = gameReducer(data, { type: 'addAttempt', attempt: attempt, attemptResult: attemptResult })
@@ -149,24 +156,145 @@ describe('gameReducer addAttempt action', () => {
         expect(out.maxAttempts).toEqual(data.maxAttempts)
         expect(out.currentAttempt).toEqual('')
         expect(out.previousAttempts).toEqual([...data.previousAttempts, data.currentAttempt])
-        expect(out.prevAttemptsPositionStatuses).toEqual([
-            [
-                CharacterStatus.GOOD_POSITION,
-                CharacterStatus.NOT_PRESENT,
-                CharacterStatus.NOT_PRESENT,
-                CharacterStatus.BAD_POSITION,
-                CharacterStatus.NOT_PRESENT,
-                CharacterStatus.GOOD_POSITION
-            ],
-            [
-                WordleApiCharacterStatus.BAD_POSITION,
-                WordleApiCharacterStatus.BAD_POSITION,
-                WordleApiCharacterStatus.NOT_PRESENT,
-                WordleApiCharacterStatus.NOT_PRESENT,
-                WordleApiCharacterStatus.NOT_PRESENT,
-                WordleApiCharacterStatus.BAD_POSITION
-            ]
+        expect(out.prevAttemptsPositionStatuses).toEqual([...data.prevAttemptsPositionStatuses,
+        [
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.NOT_PRESENT,
+            CharacterStatus.NOT_PRESENT,
+            CharacterStatus.NOT_PRESENT,
+            CharacterStatus.BAD_POSITION
+        ]
         ])
+        expect(out.status).toEqual(data.status)
+    })
+
+    test('updates game status to WIN when attempt is correct', () => {
+        const attempt = 'BATEAU'
+        const attemptResult = [
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION
+        ]
+        let data = {
+            dateYYYYMMDD: '20231115',
+            wordLength: 6,
+            maxAttempts: 6,
+            currentAttempt: attempt,
+            previousAttempts: ['AZERTY'],
+            prevAttemptsPositionStatuses: [
+                [
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.NOT_PRESENT,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.NOT_PRESENT,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.NOT_PRESENT
+                ]
+            ],
+            status: GameStatus.IN_PROGRESS
+        }
+
+        const out = gameReducer(data, { type: 'addAttempt', attempt: attempt, attemptResult: attemptResult })
+
+        expect(out.dateYYYYMMDD).toEqual(data.dateYYYYMMDD)
+        expect(out.wordLength).toEqual(data.wordLength)
+        expect(out.maxAttempts).toEqual(data.maxAttempts)
+        expect(out.currentAttempt).toEqual('')
+        expect(out.previousAttempts).toEqual([...data.previousAttempts, data.currentAttempt])
+        expect(out.prevAttemptsPositionStatuses).toEqual([...data.prevAttemptsPositionStatuses,
+        [
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION,
+            WordleApiCharacterStatus.GOOD_POSITION
+        ]
+        ])
+        expect(out.status).toEqual(GameStatus.WIN)
+    })
+
+    test('updates game status to LOOSE when all attempts were played', () => {
+        const attempt = 'FAYOTS'
+        const attemptResult = [
+            WordleApiCharacterStatus.BAD_POSITION,
+            WordleApiCharacterStatus.BAD_POSITION,
+            WordleApiCharacterStatus.BAD_POSITION,
+            WordleApiCharacterStatus.BAD_POSITION,
+            WordleApiCharacterStatus.BAD_POSITION,
+            WordleApiCharacterStatus.BAD_POSITION
+        ]
+        let data = {
+            dateYYYYMMDD: '20231115',
+            wordLength: 6,
+            maxAttempts: 6,
+            currentAttempt: attempt,
+            previousAttempts: ['AZERTY', 'BATEAU', 'CABLES', 'DIURNE', 'EMACIA'],
+            prevAttemptsPositionStatuses: [
+                [
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION
+                ],
+                [
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION
+                ]
+                , [
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION
+                ], [
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION
+                ], [
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION,
+                    CharacterStatus.BAD_POSITION
+                ]
+            ],
+            status: GameStatus.IN_PROGRESS
+        }
+
+        const out = gameReducer(data, { type: 'addAttempt', attempt: attempt, attemptResult: attemptResult })
+
+        expect(out.dateYYYYMMDD).toEqual(data.dateYYYYMMDD)
+        expect(out.wordLength).toEqual(data.wordLength)
+        expect(out.maxAttempts).toEqual(data.maxAttempts)
+        expect(out.currentAttempt).toEqual('')
+        expect(out.previousAttempts).toEqual([...data.previousAttempts, data.currentAttempt])
+        expect(out.prevAttemptsPositionStatuses).toEqual([...data.prevAttemptsPositionStatuses,
+        [
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.BAD_POSITION,
+            CharacterStatus.BAD_POSITION
+        ]
+        ])
+        expect(out.status).toEqual(GameStatus.LOOSE)
     })
 })
 
@@ -178,7 +306,8 @@ describe('gameReducer addCharacter action', () => {
             maxAttempts: 6,
             currentAttempt: '',
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
 
         let f = () => gameReducer(game, { type: 'addCharacter' })
@@ -204,7 +333,8 @@ describe('gameReducer addCharacter action', () => {
             maxAttempts: 6,
             currentAttempt: currentAttempt,
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
         assert(data.currentAttempt.length === data.wordLength)
 
@@ -217,6 +347,7 @@ describe('gameReducer addCharacter action', () => {
         expect(out.currentAttempt).toEqual(out.currentAttempt)
         expect(out.previousAttempts).toEqual(data.previousAttempts)
         expect(out.prevAttemptsPositionStatuses).toEqual(data.prevAttemptsPositionStatuses)
+        expect(out.status).toEqual(data.status)
     })
 
     test.each([
@@ -231,7 +362,8 @@ describe('gameReducer addCharacter action', () => {
             maxAttempts: 6,
             currentAttempt: currentAttempt,
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
 
         const out = gameReducer(data, { type: 'addCharacter', character: character })
@@ -242,6 +374,7 @@ describe('gameReducer addCharacter action', () => {
         expect(out.currentAttempt).toEqual(expected)
         expect(out.previousAttempts).toEqual(data.previousAttempts)
         expect(out.prevAttemptsPositionStatuses).toEqual(data.prevAttemptsPositionStatuses)
+        expect(out.status).toEqual(data.status)
     })
 })
 
@@ -258,7 +391,8 @@ describe('gameReducer removeCharacter action', () => {
             maxAttempts: 6,
             currentAttempt: currentAttempt,
             previousAttempts: [],
-            prevAttemptsPositionStatuses: []
+            prevAttemptsPositionStatuses: [],
+            status: GameStatus.IN_PROGRESS
         }
         const out = gameReducer(data, { type: 'removeCharacter' })
 
@@ -268,5 +402,6 @@ describe('gameReducer removeCharacter action', () => {
         expect(out.currentAttempt).toEqual(data.currentAttempt.slice(0, -1))
         expect(out.previousAttempts).toEqual(data.previousAttempts)
         expect(out.prevAttemptsPositionStatuses).toEqual(data.prevAttemptsPositionStatuses)
+        expect(out.status).toEqual(data.status)
     })
 })

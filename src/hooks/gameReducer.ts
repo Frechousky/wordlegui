@@ -1,6 +1,6 @@
 import { WordleApiCharacterStatus } from "../clients/wordleapi"
 import { WORD_LENGTHS } from "../constants"
-import { loadGame, saveGame } from "../persistence"
+import { GameStatus, loadGame, saveGame } from "../persistence"
 import { GameData } from "../persistence"
 import { wordleApiCharacterStatusToCharacterStatus } from "../utils"
 
@@ -83,6 +83,11 @@ function addAttempt(action: GameReducerAction, game: GameData) {
     newGame.previousAttempts = [...newGame.previousAttempts, action.attempt]
     newGame.prevAttemptsPositionStatuses = [...newGame.prevAttemptsPositionStatuses, action.attemptResult.map(wordleApiCharacterStatusToCharacterStatus)]
     newGame.currentAttempt = ''
+    if (action.attemptResult.every(v => v === WordleApiCharacterStatus.GOOD_POSITION)) {
+        newGame.status = GameStatus.WIN
+    } else if (newGame.previousAttempts.length === newGame.maxAttempts) {
+        newGame.status = GameStatus.LOOSE
+    }
     saveGame(newGame)
     return newGame
 }
