@@ -9,7 +9,7 @@ import {
 } from '../../constants'
 import GameKeyboard from './GameKeyboard'
 
-test.each([KEYBOARDS])('keyboard renders correctly', (keyboard: Keyboard) => {
+it.each([KEYBOARDS])('renders correctly', (keyboard: Keyboard) => {
   render(<GameKeyboard keyboard={keyboard} />)
 
   keyboard.keys.forEach(row => {
@@ -24,7 +24,7 @@ test.each([KEYBOARDS])('keyboard renders correctly', (keyboard: Keyboard) => {
   })
 })
 
-test.each([KEYBOARDS])(
+it.each([KEYBOARDS])(
   'calls correct handler when clicking character key',
   (keyboard: Keyboard) => {
     const mockHandleOnCharacterClick = jest.fn(() => {})
@@ -48,7 +48,7 @@ test.each([KEYBOARDS])(
   }
 )
 
-test.each([KEYBOARDS])(
+it.each([KEYBOARDS])(
   'calls correct handler when clicking backspace key',
   (keyboard: Keyboard) => {
     const mockHandleOnCharacterClick = jest.fn(() => {})
@@ -72,7 +72,7 @@ test.each([KEYBOARDS])(
   }
 )
 
-test.each([KEYBOARDS])(
+it.each([KEYBOARDS])(
   'calls correct handler when clicking return key',
   (keyboard: Keyboard) => {
     const mockHandleOnCharacterClick = jest.fn(() => {})

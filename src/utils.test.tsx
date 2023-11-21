@@ -6,12 +6,12 @@ import {
 } from './utils'
 
 describe('wordleApiCharacterStatusToCharacterStatus', () => {
-  test.each([
+  it.each([
     [WordleApiCharacterStatus.BAD_POSITION, CharacterStatus.BAD_POSITION],
     [WordleApiCharacterStatus.GOOD_POSITION, CharacterStatus.GOOD_POSITION],
     [WordleApiCharacterStatus.NOT_PRESENT, CharacterStatus.NOT_PRESENT]
   ])(
-    'conversion is correct',
+    'converts correctly',
     (apiStatus: WordleApiCharacterStatus, expected: CharacterStatus) => {
       expect(wordleApiCharacterStatusToCharacterStatus(apiStatus)).toBe(
         expected
@@ -21,7 +21,7 @@ describe('wordleApiCharacterStatusToCharacterStatus', () => {
 })
 
 describe('getTodayYYYYMMDD', () => {
-  test.each([
+  it.each([
     ['2023-11-14T00:00:00Z', '20231114'],
     ['2023-11-14T12:00:00Z', '20231114'],
     ['2023-11-14T23:59:59Z', '20231114']

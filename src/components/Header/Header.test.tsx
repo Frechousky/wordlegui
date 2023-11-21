@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import Header from './Header'
 
-test('renders correctly', () => {
+it('renders correctly', () => {
   const title = 'My title'
   render(<Header title={title} />)
 

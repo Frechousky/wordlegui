@@ -1,9 +1,13 @@
 import { render, screen } from '@testing-library/react'
-import { KEY_BACKSPACE, KEY_EMPTY, KEY_RETURN } from '../../constants'
-import { CharacterStatus } from '../../constants'
+import {
+  CharacterStatus,
+  KEY_BACKSPACE,
+  KEY_EMPTY,
+  KEY_RETURN
+} from '../../constants'
 import GameKeyboardKey from './GameKeyboardKey'
 
-test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
+it.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
   "renders '%s' key correctly",
   (key: string) => {
     render(
@@ -16,7 +20,7 @@ test.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
   }
 )
 
-test("renders 'backspace' key correctly", () => {
+it("renders 'backspace' key correctly", () => {
   render(
     <GameKeyboardKey value={KEY_BACKSPACE} status={CharacterStatus.UNKNOWN} />
   )
@@ -28,7 +32,7 @@ test("renders 'backspace' key correctly", () => {
   expect(icon).toBeInTheDocument()
 })
 
-test("renders 'return' key correctly", () => {
+it("renders 'return' key correctly", () => {
   render(
     <GameKeyboardKey value={KEY_RETURN} status={CharacterStatus.UNKNOWN} />
   )
@@ -40,7 +44,7 @@ test("renders 'return' key correctly", () => {
   expect(icon).toBeInTheDocument()
 })
 
-test("renders 'empty' key correctly", () => {
+it("renders 'empty' key correctly", () => {
   render(<GameKeyboardKey value={KEY_EMPTY} status={CharacterStatus.UNKNOWN} />)
 
   const kk = screen.getByRole('button')
@@ -49,7 +53,7 @@ test("renders 'empty' key correctly", () => {
   expect(kk).toHaveAttribute('disabled')
 })
 
-test.each([
+it.each([
   CharacterStatus.GOOD_POSITION,
   CharacterStatus.BAD_POSITION,
   CharacterStatus.NOT_PRESENT,

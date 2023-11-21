@@ -1,29 +1,29 @@
 import { render, screen } from '@testing-library/react'
-import CharacterBox from './CharacterBox'
+import LetterInput from './LetterInput'
 import { CharacterStatus } from '../../constants'
 
-test.each('ABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
+it.each('abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
   "renders input character '%s'",
   (character: string) => {
     render(
-      <CharacterBox character={character} status={CharacterStatus.UNKNOWN} />
+      <LetterInput character={character} status={CharacterStatus.UNKNOWN} />
     )
 
-    const cb = screen.getByTestId('character-box')
+    const letterInput = screen.getByTestId('letter-input')
 
-    expect(cb).toHaveTextContent(new RegExp(`^${character}$`))
+    expect(letterInput).toHaveAttribute('value', character)
   }
 )
 
-test.each([
+it.each([
   CharacterStatus.GOOD_POSITION,
   CharacterStatus.BAD_POSITION,
   CharacterStatus.NOT_PRESENT,
   CharacterStatus.UNKNOWN
 ])('has correct data-status', (status: CharacterStatus) => {
-  render(<CharacterBox character='A' status={status} />)
+  render(<LetterInput character='A' status={status} />)
 
-  const cb = screen.getByTestId('character-box')
+  const cb = screen.getByTestId('letter-input')
 
   expect(cb).toHaveAttribute('data-status', `${status}`)
 })

@@ -7,7 +7,7 @@ import { GameStatus } from "../persistence"
 const ATTEMPT_RESULT_BAD_POSITION = Array(6).fill(WordleApiCharacterStatus.BAD_POSITION)
 
 describe('gameReducer addAttempt action', () => {
-    test.each([
+    it.each([
         [undefined, undefined],
         [undefined, []],
         [undefined, ATTEMPT_RESULT_BAD_POSITION],
@@ -32,7 +32,7 @@ describe('gameReducer addAttempt action', () => {
         expect(f).toThrowError('Missing attempt or attemptResult')
     })
 
-    test.each([
+    it.each([
         'AZE',
         'AZERTYUIOP',
     ])('throws error if attempt is not wordLength long', (attempt: string) => {
@@ -52,7 +52,7 @@ describe('gameReducer addAttempt action', () => {
         expect(f).toThrowError('Invalid attempt')
     })
 
-    test.each([
+    it.each([
         [[WordleApiCharacterStatus.BAD_POSITION, WordleApiCharacterStatus.BAD_POSITION]],
         [[
             WordleApiCharacterStatus.BAD_POSITION,
@@ -81,7 +81,7 @@ describe('gameReducer addAttempt action', () => {
         expect(f).toThrowError('Invalid attemptResult')
     })
 
-    test('adds attempt correctly when there is no previous attempts', () => {
+    it('adds attempt correctly when there is no previous attempts', () => {
         const attempt = 'AZERTY'
         const attemptResult = [
             WordleApiCharacterStatus.GOOD_POSITION,
@@ -120,7 +120,7 @@ describe('gameReducer addAttempt action', () => {
         expect(out.status).toEqual(data.status)
     })
 
-    test('adds attempt correctly when there are previous attempts', () => {
+    it('adds attempt correctly when there are previous attempts', () => {
         const attempt = 'BATEAU'
         const attemptResult = [
             WordleApiCharacterStatus.BAD_POSITION,
@@ -169,7 +169,7 @@ describe('gameReducer addAttempt action', () => {
         expect(out.status).toEqual(data.status)
     })
 
-    test('updates game status to WIN when attempt is correct', () => {
+    it('updates game status to WIN when attempt is correct', () => {
         const attempt = 'BATEAU'
         const attemptResult = [
             WordleApiCharacterStatus.GOOD_POSITION,
@@ -218,7 +218,7 @@ describe('gameReducer addAttempt action', () => {
         expect(out.status).toEqual(GameStatus.WIN)
     })
 
-    test('updates game status to LOOSE when all attempts were played', () => {
+    it('updates game status to LOOSE when all attempts were played', () => {
         const attempt = 'FAYOTS'
         const attemptResult = [
             WordleApiCharacterStatus.BAD_POSITION,
@@ -299,7 +299,7 @@ describe('gameReducer addAttempt action', () => {
 })
 
 describe('gameReducer addCharacter action', () => {
-    test('throws error if character is empty', () => {
+    it('throws error if character is empty', () => {
         const game = {
             dateYYYYMMDD: '20231115',
             wordLength: 6,
@@ -319,7 +319,7 @@ describe('gameReducer addCharacter action', () => {
         expect(h).toThrowError('Missing character')
     })
 
-    test.each([
+    it.each([
         ['AZERTY', 'A', 6],
         ['BATEAU', 'a', 6],
         ['AZERTYU', 'A', 7],
@@ -350,7 +350,7 @@ describe('gameReducer addCharacter action', () => {
         expect(out.status).toEqual(data.status)
     })
 
-    test.each([
+    it.each([
         ['', 'A', 'A'],
         ['', 'a', 'A'],
         ['AZE', 'R', 'AZER'],
@@ -379,7 +379,7 @@ describe('gameReducer addCharacter action', () => {
 })
 
 describe('gameReducer removeCharacter action', () => {
-    test.each([
+    it.each([
         ['AZERTY', 'AZERT'],
         ['AZERT', 'AZER'],
         ['A', ''],

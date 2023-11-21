@@ -1,194 +1,8 @@
 import { render, screen } from '@testing-library/react'
+import { CharacterStatus as CS, LETTER_UNKNOWN } from '../../constants'
 import GameGrid from './GameGrid'
-import assert from 'assert'
-import {
-  CharacterStatus as CS,
-  CharacterStatus,
-  LETTER_UNKNOWN
-} from '../../constants'
 
-test.each([
-  [['AZERTY', 'ABATTU', 'FIABLE'], []],
-  [
-    ['AZERTY', 'ABATTU', 'FIABLE'],
-    [
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ]
-    ]
-  ],
-  [
-    ['AZERTY', 'ABATTU', 'FIABLE'],
-    [
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ]
-    ]
-  ]
-])(
-  'throws error when words and statuses length do not match',
-  (words: string[], statuses: CharacterStatus[][]) => {
-    assert(words.length !== statuses.length)
-
-    expect(() => {
-      render(<GameGrid words={words} statuses={statuses} />)
-    }).toThrowError(new RegExp('Words and statuses count does not match'))
-  }
-)
-
-test.each([
-  [['AZERTY', 'AXE', 'FIABLE']],
-  [['AZERTY', 'LAMPER', 'ABRARACOURCIX']]
-])(
-  'throws error when all word does not have same length',
-  (words: string[]) => {
-    const wordLength = words[0].length
-    assert(words.some(v => v.length !== wordLength))
-
-    const statuses = [
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ]
-    ]
-
-    expect(() => {
-      render(<GameGrid words={words} statuses={statuses} />)
-    }).toThrowError(new RegExp('At least one word with invalid length'))
-  }
-)
-
-test.each([
-  [
-    [
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ]
-    ]
-  ],
-  [
-    [
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ],
-      [],
-      [
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION,
-        CharacterStatus.BAD_POSITION
-      ]
-    ]
-  ]
-])(
-  'throws error when all status does not have same length',
-  (statuses: CharacterStatus[][]) => {
-    const words = ['AZERTY', 'FIABLE', 'LAMPER']
-    const wordLength = words[0].length
-    assert(statuses.some(v => v.length !== wordLength))
-
-    expect(() => {
-      render(<GameGrid words={words} statuses={statuses} />)
-    }).toThrowError(new RegExp('At least one status with invalid length'))
-  }
-)
-
-test('renders correctly', () => {
+it('renders correctly', () => {
   const maxAttempts = 6
   const wordLength = 6
   const words = [
@@ -229,18 +43,100 @@ test('renders correctly', () => {
     Array(6).fill(CS.UNKNOWN)
   ]
 
-  render(<GameGrid words={words} statuses={statuses} />)
+  render(
+    <GameGrid
+      words={words}
+      statuses={statuses}
+      wordLength={6}
+      maxAttempts={6}
+    />
+  )
 
-  const characterBoxes = screen.getAllByTestId('character-box')
+  const letterInputs = screen.getAllByTestId('letter-input')
 
-  expect(characterBoxes).toHaveLength(maxAttempts * wordLength)
+  expect(letterInputs).toHaveLength(maxAttempts * wordLength)
   for (let i = 0; i < maxAttempts; i++) {
     for (let j = 0; j < wordLength; j++) {
-      const currentLB = characterBoxes[i * wordLength + j]
-      const character = words[i].charAt(j).toUpperCase()
+      const currentLetterInput = letterInputs[i * wordLength + j]
+      const character = words[i].charAt(j)
       let status = statuses[i][j]
-      expect(currentLB).toHaveTextContent(character)
-      expect(currentLB).toHaveAttribute('data-status', `${status}`)
+      expect(currentLetterInput).toHaveAttribute('value', character)
+      expect(currentLetterInput).toHaveAttribute('data-status', `${status}`)
+    }
+  }
+})
+
+it('fills with unknown characters and unknown statuses when word list and/or status list is not complete', () => {
+  const maxAttempts = 6
+  const wordLength = 6
+  const words = ['AZERTY', 'LAMPER', 'FIA']
+  const statuses = [
+    [
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT,
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT,
+      CS.NOT_PRESENT,
+      CS.NOT_PRESENT
+    ],
+    [
+      CS.BAD_POSITION,
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT,
+      CS.NOT_PRESENT,
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT
+    ]
+  ]
+
+  render(
+    <GameGrid
+      words={words}
+      statuses={statuses}
+      wordLength={6}
+      maxAttempts={6}
+    />
+  )
+
+  const letterInputs = screen.getAllByTestId('letter-input')
+  const expectedWords = [
+    'AZERTY',
+    'LAMPER',
+    'FIA___',
+    '______',
+    '______',
+    '______'
+  ]
+  const expectedStatuses = [
+    [
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT,
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT,
+      CS.NOT_PRESENT,
+      CS.NOT_PRESENT
+    ],
+    [
+      CS.BAD_POSITION,
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT,
+      CS.NOT_PRESENT,
+      CS.BAD_POSITION,
+      CS.NOT_PRESENT
+    ],
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN]
+  ]
+  expect(letterInputs).toHaveLength(maxAttempts * wordLength)
+  for (let i = 0; i < maxAttempts; i++) {
+    for (let j = 0; j < wordLength; j++) {
+      const currentLetterInput = letterInputs[i * wordLength + j]
+      const character = expectedWords[i].charAt(j)
+      const status = expectedStatuses[i][j]
+      expect(currentLetterInput).toHaveAttribute('value', character)
+      expect(currentLetterInput).toHaveAttribute('data-status', `${status}`)
     }
   }
 })
