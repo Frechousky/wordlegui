@@ -1,18 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { CharacterStatus as CS, LETTER_UNKNOWN } from '../../constants'
+import { CharacterStatus as CS } from '../../constants'
 import GameGrid from './GameGrid'
 
 it('renders correctly', () => {
   const maxAttempts = 6
   const wordLength = 6
-  const words = [
-    'AZERTY',
-    'LAMPER',
-    'FIABLE',
-    LETTER_UNKNOWN.repeat(6),
-    LETTER_UNKNOWN.repeat(6),
-    LETTER_UNKNOWN.repeat(6)
-  ]
+  const words = ['AZERTY', 'LAMPER', 'FIABLE', '______', '______', '______']
   const statuses = [
     [
       CS.BAD_POSITION,
@@ -38,9 +31,9 @@ it('renders correctly', () => {
       CS.GOOD_POSITION,
       CS.GOOD_POSITION
     ],
-    Array(6).fill(CS.UNKNOWN),
-    Array(6).fill(CS.UNKNOWN),
-    Array(6).fill(CS.UNKNOWN)
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
+    [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN]
   ]
 
   render(
