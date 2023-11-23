@@ -1,11 +1,11 @@
 import { Alert, Snackbar } from '@mui/material'
 
-export type ErrorAlertProps = {
+export type ErrorSnackbarProps = {
   message: string
   onClose: () => void
 }
 
-function ErrorAlert ({ message, onClose }: ErrorAlertProps) {
+function ErrorSnackbar ({ message, onClose }: ErrorSnackbarProps) {
   return (
     <Snackbar
       open={true}
@@ -19,4 +19,4 @@ function ErrorAlert ({ message, onClose }: ErrorAlertProps) {
   )
 }
 
-export default ErrorAlert
+export default ErrorSnackbar

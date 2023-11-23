@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import ErrorAlert from './ErrorAlert'
+import ErrorSnackbar from './ErrorSnackbar'
 
 const MESSAGE = 'Error happened'
 
 it('renders correctly', () => {
-  render(<ErrorAlert message={MESSAGE} onClose={() => {}} />)
+  render(<ErrorSnackbar message={MESSAGE} onClose={() => {}} />)
 
   const errorAlert = screen.queryByRole('alert')
 
@@ -26,7 +26,7 @@ it('renders correctly', () => {
 it('calls onclose handler when clicking close button', () => {
   const onClose = jest.fn()
 
-  render(<ErrorAlert message={MESSAGE} onClose={onClose} />)
+  render(<ErrorSnackbar message={MESSAGE} onClose={onClose} />)
 
   userEvent.click(screen.getByTitle('Close'))
 
@@ -36,7 +36,7 @@ it('calls onclose handler when clicking close button', () => {
 it('calls onclose handler when user press escape', () => {
   const onClose = jest.fn()
 
-  render(<ErrorAlert message={MESSAGE} onClose={onClose} />)
+  render(<ErrorSnackbar message={MESSAGE} onClose={onClose} />)
 
   fireEvent.keyDown(screen.getByRole('alert'), {
     key: 'Escape',

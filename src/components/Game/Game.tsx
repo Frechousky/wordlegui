@@ -13,7 +13,7 @@ import gameReducer, {
   buildRemoveCharacterAction
 } from '../../hooks/gameReducer'
 import { GameData, GameStatus, Settings } from '../../persistence'
-import ErrorAlert from '../ErrorAlert/ErrorAlert'
+import ErrorSnackbar from '../ErrorSnackbar/ErrorSnackbar'
 import GameGrid from '../GameGrid/GameGrid'
 import GameKeyboard from '../GameKeyboard/GameKeyboard'
 import Header from '../Header/Header'
@@ -22,7 +22,7 @@ const ERROR_ALERT_AUTOHIDE_DURATION = 5000
 
 type Error = {
   message: string
-  hideErrorAlertTimeoutId: ReturnType<typeof setTimeout> | undefined
+  hideErrorTimeoutId: ReturnType<typeof setTimeout> | undefined
 }
 
 type GameProps = {
@@ -35,7 +35,7 @@ function Game ({ initData, settings }: GameProps) {
 
   const [error, setError] = useState({
     message: '',
-    hideErrorAlertTimeoutId: undefined
+    hideErrorTimeoutId: undefined
   } as Error)
 
   useEffect(() => {
@@ -63,14 +63,14 @@ function Game ({ initData, settings }: GameProps) {
         )
       : undefined
 
-  function handleAlertClose () {
-    if (error.hideErrorAlertTimeoutId) {
-      clearTimeout(error.hideErrorAlertTimeoutId)
+  function handleErrorHide () {
+    if (error.hideErrorTimeoutId) {
+      clearTimeout(error.hideErrorTimeoutId)
     }
     if (error.message) {
       setError({
         message: '',
-        hideErrorAlertTimeoutId: undefined
+        hideErrorTimeoutId: undefined
       })
     }
   }
@@ -86,16 +86,16 @@ function Game ({ initData, settings }: GameProps) {
     if (shakeAnimation) {
       shakeAnimation.play()
     }
-    if (error.hideErrorAlertTimeoutId) {
+    if (error.hideErrorTimeoutId) {
       // clear previous timeout
       // this makes sure error message is displayed the right amount of time
       // and not unset by calling handleAlertClose prematurely
-      clearTimeout(error.hideErrorAlertTimeoutId)
+      clearTimeout(error.hideErrorTimeoutId)
     }
-    const tid = setTimeout(handleAlertClose, ERROR_ALERT_AUTOHIDE_DURATION) // hide error alert after duration
+    const tid = setTimeout(handleErrorHide, ERROR_ALERT_AUTOHIDE_DURATION) // hide error alert after duration
     setError({
       message: message,
-      hideErrorAlertTimeoutId: tid
+      hideErrorTimeoutId: tid
     })
   }
 
@@ -168,7 +168,7 @@ function Game ({ initData, settings }: GameProps) {
     <Container sx={{ textAlign: 'center' }} id='game'>
       <Header title='Wordle' />
       {error.message.length > 0 && (
-        <ErrorAlert message={error.message} onClose={handleAlertClose} />
+        <ErrorSnackbar message={error.message} onClose={handleErrorHide} />
       )}
       <Box sx={{ paddingTop: '100px', paddingBottom: '100px' }}>
         <GameGrid
