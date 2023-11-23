@@ -1,4 +1,5 @@
 import { Box, Container } from '@mui/material'
+import { VALUE_BACK_SPACE, VALUE_RETURN } from 'keycode-js'
 import { useEffect, useReducer, useState } from 'react'
 import {
   WordleApiErrorCode,
@@ -94,9 +95,9 @@ function Game ({ initData, settings }: GameProps) {
   }
 
   function handleKeydown (e: KeyboardEvent) {
-    if (e.key === 'Enter') {
+    if (e.key === VALUE_RETURN) {
       handleReturnKeydown()
-    } else if (e.key === 'Backspace') {
+    } else if (e.key === VALUE_BACK_SPACE) {
       handleBackspaceKeydown()
     } else {
       handleLetterKeydown(e.key)
