@@ -167,9 +167,11 @@ function Game ({ initData, settings }: GameProps) {
   return (
     <Container sx={{ textAlign: 'center' }} id='game'>
       <Header title='Wordle' />
-      {error.message.length > 0 && (
-        <ErrorSnackbar message={error.message} onClose={handleErrorHide} />
-      )}
+      <ErrorSnackbar
+        message={error.message}
+        open={error.message.length > 0}
+        onClose={handleErrorHide}
+      />
       <Box sx={{ paddingTop: '100px', paddingBottom: '100px' }}>
         <GameGrid
           words={[...data.previousAttempts, data.currentAttempt]}
