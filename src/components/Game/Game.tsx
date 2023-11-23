@@ -46,19 +46,22 @@ function Game ({ initData, settings }: GameProps) {
     }
   })
 
-  const shakeAnimation = new Animation(
-    new KeyframeEffect(
-      document.getElementById('game'),
-      [
-        { transform: 'translateX(1%)' },
-        { transform: 'translateX(0)' },
-        { transform: 'translateX(-1%)' },
-        { transform: 'translateX(0)' }
-      ],
-      { duration: 120, fill: 'forwards', iterations: 3 }
-    ),
-    document.timeline
-  )
+  const shakeAnimation =
+    window.Animation && window.KeyframeEffect
+      ? new Animation(
+          new KeyframeEffect(
+            document.getElementById('game'),
+            [
+              { transform: 'translateX(1%)' },
+              { transform: 'translateX(0)' },
+              { transform: 'translateX(-1%)' },
+              { transform: 'translateX(0)' }
+            ],
+            { duration: 120, fill: 'forwards', iterations: 3 }
+          ),
+          document.timeline
+        )
+      : undefined
 
   function handleAlertClose () {
     if (error.hideErrorAlertTimeoutId) {
@@ -80,7 +83,9 @@ function Game ({ initData, settings }: GameProps) {
   }
 
   function handleError (message: string) {
-    shakeAnimation.play()
+    if (shakeAnimation) {
+      shakeAnimation.play()
+    }
     if (error.hideErrorAlertTimeoutId) {
       // clear previous timeout
       // this makes sure error message is displayed the right amount of time
