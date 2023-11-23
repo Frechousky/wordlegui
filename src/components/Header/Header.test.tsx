@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react'
+import { GAME_TITLE } from '../../constants'
 import Header from './Header'
 
 it('renders correctly', () => {
-  const title = 'My title'
-  render(<Header title={title} />)
+  render(<Header />)
 
-  const headerTitle = screen.getByText(title)
+  const headerTitle = screen.getByText(GAME_TITLE)
 
   expect(headerTitle).toBeVisible()
 })

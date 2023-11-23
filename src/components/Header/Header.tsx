@@ -1,10 +1,7 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material'
+import { GAME_TITLE } from '../../constants'
 
-export type HeaderProps = {
-  title: string
-}
-
-function Header ({ title }: HeaderProps) {
+function Header () {
   return (
     <Box>
       <AppBar position='static'>
@@ -15,7 +12,7 @@ function Header ({ title }: HeaderProps) {
             sx={{ flexGrow: 1 }}
             align='center'
           >
-            {title}
+            {GAME_TITLE}
           </Typography>
         </Toolbar>
       </AppBar>

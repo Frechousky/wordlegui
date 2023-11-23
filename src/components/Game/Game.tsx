@@ -166,7 +166,7 @@ function Game ({ initData, settings }: GameProps) {
 
   return (
     <Container sx={{ textAlign: 'center' }} id='game'>
-      <Header title='Wordle' />
+      <Header />
       <ErrorSnackbar
         message={error.message}
         open={error.message.length > 0}

@@ -10,6 +10,8 @@ export type Keyboard = {
     keys: string[][]
 }
 
+export const GAME_TITLE = 'Wordle'
+
 export const LETTER_UNKNOWN = '_'
 
 export const KEY_BACKSPACE = '0'
