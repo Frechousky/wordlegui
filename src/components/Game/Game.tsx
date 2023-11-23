@@ -5,7 +5,7 @@ import {
   WordleApiResponse,
   postPlayerAttempt
 } from '../../clients/wordleapi'
-import { CharacterStatus } from '../../constants'
+import { ALPHABET_LETTER_REGEX, CharacterStatus } from '../../constants'
 import gameReducer, {
   buildAddAttemptAction,
   buildAddCharacterAction,
@@ -108,7 +108,7 @@ function Game ({ initData, settings }: GameProps) {
       return
     }
     if (
-      /^[a-zA-Z]$/.test(key) &&
+      ALPHABET_LETTER_REGEX.test(key) &&
       data.currentAttempt.length < data.wordLength
     ) {
       dispatch(buildAddCharacterAction(key.toUpperCase()))

@@ -29,3 +29,5 @@ export const MAX_ATTEMPTS_BY_WORDLENGTH: { [key: number]: number } = {
     7: 6,
     8: 7
 }
+
+export const ALPHABET_LETTER_REGEX = /^[a-zA-Z]$/
