@@ -5,7 +5,7 @@ import ErrorSnackbar from './ErrorSnackbar'
 const MESSAGE = 'Error happened'
 
 it('renders correctly', () => {
-  render(<ErrorSnackbar message={MESSAGE} onClose={() => {}} />)
+  render(<ErrorSnackbar message={MESSAGE} onClose={() => {}} open={true} />)
 
   const errorAlert = screen.queryByRole('alert')
 
@@ -26,7 +26,7 @@ it('renders correctly', () => {
 it('calls onclose handler when clicking close button', () => {
   const onClose = jest.fn()
 
-  render(<ErrorSnackbar message={MESSAGE} onClose={onClose} />)
+  render(<ErrorSnackbar message={MESSAGE} onClose={onClose} open={true} />)
 
   userEvent.click(screen.getByTitle('Close'))
 
@@ -36,7 +36,7 @@ it('calls onclose handler when clicking close button', () => {
 it('calls onclose handler when user press escape', () => {
   const onClose = jest.fn()
 
-  render(<ErrorSnackbar message={MESSAGE} onClose={onClose} />)
+  render(<ErrorSnackbar message={MESSAGE} onClose={onClose} open={true} />)
 
   fireEvent.keyDown(screen.getByRole('alert'), {
     key: 'Escape',
