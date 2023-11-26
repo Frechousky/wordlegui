@@ -1,5 +1,8 @@
-import { KEYBOARDS, MAX_ATTEMPTS_BY_WORDLENGTH } from './constants'
-import { CharacterStatus, Keyboard } from './constants'
+import {
+  CharacterStatus,
+  MAX_ATTEMPTS_BY_WORDLENGTH,
+  WORD_LENGTHS
+} from './constants'
 
 export enum GameStatus {
   IN_PROGRESS,
@@ -19,10 +22,12 @@ export type GameData = {
 
 export type Settings = {
   keyboardIdx: number
+  wordLength: number
 }
 
 const DEFAULT_SETTINGS: Settings = {
   keyboardIdx: 0,
+  wordLength: WORD_LENGTHS[0]
 }
 
 export function loadGames (): GameData[] {

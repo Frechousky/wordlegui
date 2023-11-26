@@ -42,7 +42,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            settings={loadSettings()}
+            initSettings={loadSettings()}
           />
         )
 
@@ -98,7 +98,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            settings={loadSettings()}
+            initSettings={loadSettings()}
           />
         )
 
@@ -139,7 +139,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            settings={loadSettings()}
+            initSettings={loadSettings()}
           />
         )
 
@@ -173,7 +173,7 @@ describe('user presses a key', () => {
             prevAttemptsPositionStatuses: [],
             status: GameStatus.IN_PROGRESS
           }}
-          settings={loadSettings()}
+          initSettings={loadSettings()}
         />
       )
 
@@ -217,7 +217,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            settings={loadSettings()}
+            initSettings={loadSettings()}
           />
         )
 

@@ -31,11 +31,13 @@ type Error = {
 
 type GameProps = {
   initData: GameData
-  settings: Settings
+  initSettings: Settings
 }
 
-function Game ({ initData, settings }: GameProps) {
+function Game ({ initData, initSettings }: GameProps) {
   const [data, dispatch] = useReducer(gameReducer, initData)
+
+  const [settings, setSettings] = useState(initSettings)
 
   const [error, setError] = useState({
     message: '',
