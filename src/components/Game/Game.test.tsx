@@ -3,7 +3,7 @@ import assert from 'assert'
 import { VALUE_BACK_SPACE, VALUE_RETURN } from 'keycode-js'
 import { act } from 'react-dom/test-utils'
 import { ALPHABET_LETTER_REGEX, LETTER_UNKNOWN } from '../../constants'
-import { GameStatus, loadSettings } from '../../persistence'
+import { GameStatus } from '../../persistence'
 import Game from './Game'
 
 describe('user presses a key', () => {
@@ -43,7 +43,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            initSettings={loadSettings()}
+            initSettings={{ wordLength: wordLength, keyboardIdx: 0 }}
           />
         )
 
@@ -99,7 +99,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            initSettings={loadSettings()}
+            initSettings={{ wordLength: wordLength, keyboardIdx: 0 }}
           />
         )
 
@@ -130,7 +130,7 @@ describe('user presses a key', () => {
       'removes last character from current attempt when current attempt is not empty',
       (currentAttempt: string) => {
         assert(currentAttempt.length > 0)
-
+        const wordLength = 6
         render(
           <Game
             initData={{
@@ -142,7 +142,7 @@ describe('user presses a key', () => {
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            initSettings={loadSettings()}
+            initSettings={{ wordLength: wordLength, keyboardIdx: 0 }}
           />
         )
 
@@ -167,18 +167,20 @@ describe('user presses a key', () => {
     )
 
     it('does nothing when current attempt is empty', () => {
+      const wordLength = 6
+
       render(
         <Game
           initData={{
             currentAttempt: '',
-            wordLength: 6,
+            wordLength: wordLength,
             previousAttempts: [],
             dateYYYYMMDD: '20231122',
             maxAttempts: 6,
             prevAttemptsPositionStatuses: [],
             status: GameStatus.IN_PROGRESS
           }}
-          initSettings={loadSettings()}
+          initSettings={{ wordLength: wordLength, keyboardIdx: 0 }}
         />
       )
 
@@ -213,18 +215,20 @@ describe('user presses a key', () => {
         assert(key !== VALUE_BACK_SPACE)
         assert(key !== VALUE_RETURN)
 
+        const wordLength = 6
+
         render(
           <Game
             initData={{
               currentAttempt: '',
-              wordLength: 6,
+              wordLength: wordLength,
               previousAttempts: [],
               dateYYYYMMDD: '20231122',
               maxAttempts: 6,
               prevAttemptsPositionStatuses: [],
               status: GameStatus.IN_PROGRESS
             }}
-            initSettings={loadSettings()}
+            initSettings={{ wordLength: wordLength, keyboardIdx: 0 }}
           />
         )
 
