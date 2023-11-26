@@ -18,11 +18,11 @@ export type GameData = {
 }
 
 export type Settings = {
-  keyboard: Keyboard
+  keyboardIdx: number
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  keyboard: KEYBOARDS[0]
+  keyboardIdx: 0,
 }
 
 export function loadGames (): GameData[] {
