@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-unnecessary-act */
 import { fireEvent, render, screen } from '@testing-library/react'
 import assert from 'assert'
 import { VALUE_BACK_SPACE, VALUE_RETURN } from 'keycode-js'
