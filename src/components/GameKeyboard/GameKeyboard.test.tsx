@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { act } from 'react-dom/test-utils'
 import {
   KEYBOARDS,
   KEY_BACKSPACE,
@@ -40,7 +41,7 @@ it.each([KEYBOARDS])(
       />
     )
 
-    userEvent.click(screen.getByTestId('game-keyboard-key-A'))
+    act(() => userEvent.click(screen.getByTestId('game-keyboard-key-A')))
 
     expect(mockHandleOnCharacterClick).toBeCalledTimes(1)
     expect(mockHandleOnBackspaceClick).toBeCalledTimes(0)
@@ -64,7 +65,9 @@ it.each([KEYBOARDS])(
       />
     )
 
-    userEvent.click(screen.getByTestId(`game-keyboard-key-${KEY_BACKSPACE}`))
+    act(() =>
+      userEvent.click(screen.getByTestId(`game-keyboard-key-${KEY_BACKSPACE}`))
+    )
 
     expect(mockHandleOnCharacterClick).toBeCalledTimes(0)
     expect(mockHandleOnBackspaceClick).toBeCalledTimes(1)
@@ -88,7 +91,9 @@ it.each([KEYBOARDS])(
       />
     )
 
-    userEvent.click(screen.getByTestId(`game-keyboard-key-${KEY_RETURN}`))
+    act(() =>
+      userEvent.click(screen.getByTestId(`game-keyboard-key-${KEY_RETURN}`))
+    )
 
     expect(mockHandleOnCharacterClick).toBeCalledTimes(0)
     expect(mockHandleOnBackspaceClick).toBeCalledTimes(0)

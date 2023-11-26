@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import assert from 'assert'
 import { VALUE_BACK_SPACE, VALUE_RETURN } from 'keycode-js'
+import { act } from 'react-dom/test-utils'
 import { ALPHABET_LETTER_REGEX, LETTER_UNKNOWN } from '../../constants'
 import { GameStatus, loadSettings } from '../../persistence'
 import Game from './Game'
@@ -111,9 +112,11 @@ describe('user presses a key', () => {
           currentAttempt.slice(-1)
         )
 
+        act(() =>
         fireEvent.keyDown(document, {
           key: key
         })
+        )
 
         expect(letterInputs[currentAttemptLastCharacterPosition]).toHaveValue(
           currentAttempt.slice(-1)
@@ -151,9 +154,11 @@ describe('user presses a key', () => {
           currentAttempt.slice(-1)
         )
 
+        act(() =>
         fireEvent.keyDown(document, {
           key: VALUE_BACK_SPACE
         })
+        )
 
         expect(letterInputs[currentAttemptLastLetterPosition]).toHaveValue(
           LETTER_UNKNOWN
@@ -181,9 +186,11 @@ describe('user presses a key', () => {
 
       expect(letterInputs[0]).toHaveValue(LETTER_UNKNOWN)
 
+      act(() =>
       fireEvent.keyDown(document, {
         key: VALUE_BACK_SPACE
       })
+      )
 
       expect(letterInputs[0]).toHaveValue(LETTER_UNKNOWN)
     })
@@ -225,9 +232,11 @@ describe('user presses a key', () => {
 
         expect(letterInputs[0]).toHaveValue(LETTER_UNKNOWN)
 
+        act(() =>
         fireEvent.keyDown(document, {
           key: key
         })
+        )
 
         expect(letterInputs[0]).toHaveValue(LETTER_UNKNOWN)
       }
