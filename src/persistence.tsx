@@ -72,10 +72,10 @@ export function loadSettings (): Settings {
     return DEFAULT_SETTINGS
   }
   const settings = JSON.parse(settingsJson) as Settings
-  return { ...settings, ...DEFAULT_SETTINGS }
+  return { ...DEFAULT_SETTINGS, ...settings }
 }
 
 export function saveSettings (settings: Settings) {
-  const settingsJson = JSON.stringify({ ...settings, ...DEFAULT_SETTINGS })
+  const settingsJson = JSON.stringify({ ...DEFAULT_SETTINGS, ...settings })
   localStorage.setItem('settings', settingsJson)
 }
