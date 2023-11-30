@@ -139,7 +139,7 @@ function Game ({ initData, initSettings }: GameProps) {
       const json = (await resp.json()) as WordleApiResponse
       if (!resp.ok) {
         // handle API errors
-        if (json.code === WordleApiErrorCode.GUESS_NOT_IN_WHITELIST) {
+        if (json.code === WordleApiErrorCode.ATTEMPT_NOT_IN_WHITELIST) {
           handleError(
             `'${data.currentAttempt.toUpperCase()}' n'est pas dans la liste de mots`
           )

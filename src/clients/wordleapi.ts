@@ -5,10 +5,8 @@ export enum WordleApiCharacterStatus {
 }
 
 export enum WordleApiErrorCode {
-  INVALID_GUESS_LENGTH = 100,
-  EMPTY_GUESS = 101,
-  INVALID_FORMAT = 102,
-  GUESS_NOT_IN_WHITELIST = 103
+  INVALID_PAYLOAD = 100,
+  ATTEMPT_NOT_IN_WHITELIST = 101
 }
 
 export type WordleApiResponse = {
@@ -19,10 +17,12 @@ export type WordleApiResponse = {
 }
 
 export async function postPlayerAttempt(attempt: string, wordLength: number): Promise<Response> {
-  const formData = new FormData()
-  formData.append('attempt', attempt)
-  return fetch(`http://localhost:5000/word/${wordLength}/attempt`, {
+  const payload = JSON.stringify({ attempt: attempt })
+  return fetch(`http://localhost:5000/attempt`, {
     method: 'POST',
-    body: formData
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: payload
   }) as Promise<Response>
 } 
