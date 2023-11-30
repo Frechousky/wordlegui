@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import LetterInput from './LetterInput'
 import { CharacterStatus } from '../../constants'
+import LetterInput from './LetterInput'
 
 it.each('abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
   "renders input character '%s'",
