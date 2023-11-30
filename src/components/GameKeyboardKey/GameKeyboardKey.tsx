@@ -7,7 +7,7 @@ import {
 } from '../../constants'
 
 import { Backspace, Send } from '@mui/icons-material'
-import { Button } from '@mui/material'
+import { Button, Tooltip } from '@mui/material'
 
 export type GameKeyboardKeyProps = {
   value: string
@@ -20,12 +20,11 @@ function GameKeyboardKey ({
   status,
   handleOnClick
 }: GameKeyboardKeyProps) {
-  return (
+  const button = (
     <Button
       variant='contained'
       data-testid={`game-keyboard-key-${value}`}
       data-status={status}
-      data-value={value}
       disabled={value === KEY_EMPTY}
       onClick={handleOnClick}
     >
@@ -39,6 +38,22 @@ function GameKeyboardKey ({
         value
       )}
     </Button>
+  )
+  if (value === KEY_EMPTY) {
+    return button
+  }
+  return (
+    <Tooltip
+      title={
+        value === KEY_BACKSPACE
+          ? 'Effacer'
+          : value === KEY_RETURN
+          ? 'Soumettre'
+          : `Touche ${value}`
+      }
+    >
+      {button}
+    </Tooltip>
   )
 }
 
