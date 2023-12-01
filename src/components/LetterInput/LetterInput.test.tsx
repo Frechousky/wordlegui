@@ -16,14 +16,18 @@ it.each('abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
 )
 
 it.each([
-  CharacterStatus.WELL_PLACED,
-  CharacterStatus.MISPLACED,
-  CharacterStatus.NOT_PRESENT,
-  CharacterStatus.UNKNOWN
-])('has correct data-status', (status: CharacterStatus) => {
-  render(<LetterInput character='A' status={status} />)
+  [CharacterStatus.WELL_PLACED, 'well-placed'],
+  [CharacterStatus.MISPLACED, 'misplaced'],
+  [CharacterStatus.NOT_PRESENT, 'not-present'],
+  [CharacterStatus.UNKNOWN, 'unknown']
+])(
+  'renders status correctly',
+  (status: CharacterStatus, expectedCss: string) => {
+    render(<LetterInput character='A' status={status} />)
 
-  const cb = screen.getByTestId('letter-input')
+    const letterInput = screen.getByTestId('letter-input')
 
-  expect(cb).toHaveAttribute('data-status', `${status}`)
-})
+    expect(letterInput).toHaveClass(expectedCss)
+    expect(letterInput).toHaveAttribute('data-status', `${status}`)
+  }
+)
