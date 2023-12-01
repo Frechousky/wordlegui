@@ -1,6 +1,6 @@
 export enum WordleApiCharacterStatus {
-  GOOD_POSITION = 0,
-  BAD_POSITION = 1,
+  WELL_PLACED = 0,
+  MISPLACED = 1,
   NOT_PRESENT = 2
 }
 

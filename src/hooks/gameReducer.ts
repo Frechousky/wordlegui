@@ -1,7 +1,6 @@
 import { WordleApiCharacterStatus } from "../clients/wordleapi"
 import { WORD_LENGTHS } from "../constants"
-import { GameStatus, loadGame, saveGame } from "../persistence"
-import { GameData } from "../persistence"
+import { GameData, GameStatus, loadGame, saveGame } from "../persistence"
 import { wordleApiCharacterStatusToCharacterStatus } from "../utils"
 
 type ActionType = 'addAttempt' | 'addCharacter' | 'removeCharacter' | 'updateDate' | 'updateWordLength'
@@ -83,7 +82,7 @@ function addAttempt(action: GameReducerAction, game: GameData) {
     newGame.previousAttempts = [...newGame.previousAttempts, action.attempt]
     newGame.prevAttemptsPositionStatuses = [...newGame.prevAttemptsPositionStatuses, action.attemptResult.map(wordleApiCharacterStatusToCharacterStatus)]
     newGame.currentAttempt = ''
-    if (action.attemptResult.every(v => v === WordleApiCharacterStatus.GOOD_POSITION)) {
+    if (action.attemptResult.every(v => v === WordleApiCharacterStatus.WELL_PLACED)) {
         newGame.status = GameStatus.WIN
     } else if (newGame.previousAttempts.length === newGame.maxAttempts) {
         newGame.status = GameStatus.LOOSE

@@ -3,10 +3,10 @@ import { CharacterStatus } from "./constants";
 
 export function wordleApiCharacterStatusToCharacterStatus(status: WordleApiCharacterStatus): CharacterStatus {
     switch (status) {
-        case WordleApiCharacterStatus.GOOD_POSITION:
-            return CharacterStatus.GOOD_POSITION
-        case WordleApiCharacterStatus.BAD_POSITION:
-            return CharacterStatus.BAD_POSITION
+        case WordleApiCharacterStatus.WELL_PLACED:
+            return CharacterStatus.WELL_PLACED
+        case WordleApiCharacterStatus.MISPLACED:
+            return CharacterStatus.MISPLACED
         case WordleApiCharacterStatus.NOT_PRESENT:
             return CharacterStatus.NOT_PRESENT
     }

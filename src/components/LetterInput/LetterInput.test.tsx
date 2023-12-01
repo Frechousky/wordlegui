@@ -16,8 +16,8 @@ it.each('abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ_'.split(''))(
 )
 
 it.each([
-  CharacterStatus.GOOD_POSITION,
-  CharacterStatus.BAD_POSITION,
+  CharacterStatus.WELL_PLACED,
+  CharacterStatus.MISPLACED,
   CharacterStatus.NOT_PRESENT,
   CharacterStatus.UNKNOWN
 ])('has correct data-status', (status: CharacterStatus) => {

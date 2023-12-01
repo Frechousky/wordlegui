@@ -8,28 +8,28 @@ it('renders correctly', () => {
   const words = ['AZERTY', 'LAMPER', 'FIABLE', '______', '______', '______']
   const statuses = [
     [
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT
     ],
     [
-      CS.BAD_POSITION,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT
     ],
     [
-      CS.GOOD_POSITION,
-      CS.GOOD_POSITION,
-      CS.GOOD_POSITION,
-      CS.GOOD_POSITION,
-      CS.GOOD_POSITION,
-      CS.GOOD_POSITION
+      CS.WELL_PLACED,
+      CS.WELL_PLACED,
+      CS.WELL_PLACED,
+      CS.WELL_PLACED,
+      CS.WELL_PLACED,
+      CS.WELL_PLACED
     ],
     [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
     [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],
@@ -65,19 +65,19 @@ it('fills with unknown characters and unknown statuses when word list and/or sta
   const words = ['AZERTY', 'LAMPER', 'FIA']
   const statuses = [
     [
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT
     ],
     [
-      CS.BAD_POSITION,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT
     ]
   ]
@@ -102,19 +102,19 @@ it('fills with unknown characters and unknown statuses when word list and/or sta
   ]
   const expectedStatuses = [
     [
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT
     ],
     [
-      CS.BAD_POSITION,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
+      CS.MISPLACED,
       CS.NOT_PRESENT,
       CS.NOT_PRESENT,
-      CS.BAD_POSITION,
+      CS.MISPLACED,
       CS.NOT_PRESENT
     ],
     [CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN, CS.UNKNOWN],

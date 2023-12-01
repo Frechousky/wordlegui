@@ -7,8 +7,8 @@ import {
 
 describe('wordleApiCharacterStatusToCharacterStatus', () => {
   it.each([
-    [WordleApiCharacterStatus.BAD_POSITION, CharacterStatus.BAD_POSITION],
-    [WordleApiCharacterStatus.GOOD_POSITION, CharacterStatus.GOOD_POSITION],
+    [WordleApiCharacterStatus.MISPLACED, CharacterStatus.MISPLACED],
+    [WordleApiCharacterStatus.WELL_PLACED, CharacterStatus.WELL_PLACED],
     [WordleApiCharacterStatus.NOT_PRESENT, CharacterStatus.NOT_PRESENT]
   ])(
     'converts correctly',

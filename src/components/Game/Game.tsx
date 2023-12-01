@@ -151,7 +151,7 @@ function Game ({ initData, initSettings }: GameProps) {
         dispatch(
           buildAddAttemptAction(
             data.currentAttempt,
-            Array(data.wordLength).fill(CharacterStatus.GOOD_POSITION)
+            Array(data.wordLength).fill(CharacterStatus.WELL_PLACED)
           )
         )
       } else if (json.result !== undefined) {

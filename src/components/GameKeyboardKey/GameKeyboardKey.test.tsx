@@ -10,9 +10,7 @@ import GameKeyboardKey from './GameKeyboardKey'
 it.each('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))(
   "renders '%s' key correctly",
   (key: string) => {
-    render(
-      <GameKeyboardKey value={key} status={CharacterStatus.GOOD_POSITION} />
-    )
+    render(<GameKeyboardKey value={key} status={CharacterStatus.WELL_PLACED} />)
 
     const kk = screen.getByRole('button')
 
@@ -54,8 +52,8 @@ it("renders 'empty' key correctly", () => {
 })
 
 it.each([
-  CharacterStatus.GOOD_POSITION,
-  CharacterStatus.BAD_POSITION,
+  CharacterStatus.WELL_PLACED,
+  CharacterStatus.MISPLACED,
   CharacterStatus.NOT_PRESENT,
   CharacterStatus.UNKNOWN
 ])('has correct data-status', (status: CharacterStatus) => {
